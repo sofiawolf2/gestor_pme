@@ -1,6 +1,5 @@
 package br.com.taurustech.gestor.model;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -13,11 +12,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
-@Entity @Data @Table(name="usuario")
+@Entity @Data @Table(name="`user`")
 @NoArgsConstructor
 public class User implements UserDetails {
 
-    @Id @GeneratedValue (strategy = GenerationType.UUID)
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @NotBlank(message = "campo obrigatório")
     @Size(min = 2, max = 50, message = "campo fora do tamanho padrão")

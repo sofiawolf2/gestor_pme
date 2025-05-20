@@ -1,7 +1,7 @@
 package br.com.taurustech.gestor.security;
 
 import br.com.taurustech.gestor.model.User;
-import br.com.taurustech.gestor.model.dto.UserTokenDTO;
+import br.com.taurustech.gestor.model.dto.UserDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -58,7 +58,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
         String jwtToken = Util.createToken(user);
 
-        String json = UserTokenDTO.create(user, jwtToken).toJson();
+        String json = UserDTO.createWToken(user, jwtToken).toJson();
         ServletUtil.write(response, HttpStatus.OK, json);
     }
 
