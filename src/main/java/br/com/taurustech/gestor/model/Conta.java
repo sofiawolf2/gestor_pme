@@ -1,4 +1,4 @@
-package br.com.taurus.gestor.model;
+package br.com.taurustech.gestor.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -29,5 +29,5 @@ public class Conta {
     private Categoria categoria;
     @ManyToOne
     @JoinColumn (name = "usuario_id")
-    private Usuario usuario;
+    private User usuario;
 }

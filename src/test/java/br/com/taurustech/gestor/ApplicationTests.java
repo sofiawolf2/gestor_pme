@@ -1,4 +1,4 @@
-package br.com.taurus.gestor;
+package br.com.taurustech.gestor;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
