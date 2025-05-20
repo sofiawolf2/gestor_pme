@@ -1,43 +1,43 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE IF NOT EXISTS status (
-    nome VARCHAR(30) PRIMARY KEY,
+    id INTEGER PRIMARY KEY,
     descricao VARCHAR(100) NOT NULL
 );
 
 INSERT INTO status (nome, descricao) VALUES
-('ABERTA', 'Aguardando pagamento'),
-('VENCIDA', 'Passou do vencimento'),
-('PAGA', 'Quitada'),
-('CANCELADA', 'Cancelada antes do pagamento'),
-('PARCELADA', 'Pagamento realizado em partes'),
-('ESTORNADA', 'Reembolso ou devolução'),
-('EM_DISPUTA', 'Pagamento contestado');
+(1,'ABERTA'),
+(2,'VENCIDA'),
+(3,'PAGA'),
+(4,'CANCELADA'),
+(5,'PARCELADA'),
+(6,'ESTORNADA'),
+(7,'EM_DISPUTA);
 
 CREATE TABLE IF NOT EXISTS categoria(
-    nome VARCHAR(30) PRIMARY KEY,
+    id INTEGER PRIMARY KEY,
     descricao VARCHAR(100) NOT NULL
 );
 
 INSERT INTO categoria (nome, descricao) VALUES
-('DESPESA_FIXA', 'Contas recorrentes como aluguel, água, luz'),
-('DESPESA_VARIAVEL', 'Gastos que mudam mensalmente, como materiais e transporte'),
-('RECEITA_RECORRENTE', 'Pagamentos fixos como mensalidades'),
-('RECEITA_VARIAVEL', 'Entradas financeiras de vendas avulsas ou serviços pontuais'),
-('IMPOSTOS_TAXAS', 'Tributos e obrigações legais'),
-('INVESTIMENTOS', 'Aplicações financeiras ou aquisição de bens');
+(1,'DESPESA_FIXA'),
+(2,'DESPESA_VARIAVEL'),
+(3,'RECEITA_RECORRENTE'),
+(4,'RECEITA_VARIAVEL'),
+(5,'IMPOSTOS_TAXAS'),
+(6,'INVESTIMENTOS');
 
 CREATE TABLE IF NOT EXISTS origem (
-    nome VARCHAR(30) PRIMARY KEY,
+    id INTEGER PRIMARY KEY,
     descricao VARCHAR(100) NOT NULL
 );
 
 INSERT INTO origem (nome, descricao) VALUES
-('FORNECEDOR', 'Contas relacionadas a compras ou serviços adquiridos'),
-('CLIENTE', 'Pagamentos de vendas ou prestação de serviços'),
-('FUNCIONARIO', 'Salários, benefícios e reembolsos'),
-('INSTITUICAO_FINANCEIRA', 'Empréstimos, financiamentos e juros bancários'),
-('GOVERNO', 'Tributos e incentivos fiscais');
+(1,'FORNECEDOR'),
+(2,'CLIENTE'),
+(3,'FUNCIONARIO'),
+(4,'INSTITUICAO_FINANCEIRA'),
+(5,'GOVERNO');
 
 CREATE TABLE IF NOT EXISTS usuario (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
