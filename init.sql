@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS role (
 );
 INSERT INTO role (id, nome) VALUES (1,'ROLE_ADMIN'), (2,'ROLE_USER');
 
-CREATE TABLE IF NOT EXISTS usuario (
+CREATE TABLE IF NOT EXISTS "user" (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         nome VARCHAR(100),
         login VARCHAR(50),
@@ -55,9 +55,9 @@ CREATE TABLE IF NOT EXISTS usuario (
         FOREIGN KEY (role_id) REFERENCES "role" (id)
 );
 
-INSERT INTO usuario (id, nome, login, senha, email, role_id) VALUES
-('e9b1f85d-4a58-4c2e-bb8b-3a41f8a9d1c7', 'Sofia Dev', 'dev', '123456','dev@gmail.com', 1),
-('f3a6df49-8b26-4890-9b56-2ddc94e8f1f1', 'User Teste', 'teste', '123456','teste@gmail.com', 2);
+INSERT INTO "user" (id, nome, login, senha, email, role_id) VALUES
+('e9b1f85d-4a58-4c2e-bb8b-3a41f8a9d1c7', 'Sofia Dev', 'dev', '$2a$12$ndx7/NNxNAbUGeBwsT62oujXqSBGU/wOIiWO4O3UGbYs0WjkyJM9i','dev@gmail.com', 1),
+('f3a6df49-8b26-4890-9b56-2ddc94e8f1f1', 'User Teste', 'teste', '$2a$12$ndx7/NNxNAbUGeBwsT62oujXqSBGU/wOIiWO4O3UGbYs0WjkyJM9i','teste@gmail.com', 2);
 
 CREATE TABLE IF NOT EXISTS conta (
     id INTEGER PRIMARY KEY,
@@ -70,13 +70,13 @@ CREATE TABLE IF NOT EXISTS conta (
     status_id INTEGER,
     origem_id INTEGER,
     categoria_id INTEGER,
-    usuario_id UUID,
+    user_id UUID,
     FOREIGN KEY (status_id) REFERENCES "status" (id),
     FOREIGN KEY (origem_id) REFERENCES "origem" (id),
     FOREIGN KEY (categoria_id) REFERENCES "categoria" (id),
-    FOREIGN KEY (usuario_id) REFERENCES "usuario" (id)
+    FOREIGN KEY (user_id) REFERENCES "user" (id)
 );
 
-INSERT INTO conta (id, vencimento, descricao, valor, data_pagamento, observacao, imagem, status_id, origem_id, categoria_id, usuario_id)
+INSERT INTO conta (id, vencimento, descricao, valor, data_pagamento, observacao, imagem, status_id, origem_id, categoria_id, user_id)
 VALUES
 (1, '2026-01-01', 'Conta teste', 2000.00, null, 'é isso', 'sem imagem', 1, 1, 1, 'f3a6df49-8b26-4890-9b56-2ddc94e8f1f1');

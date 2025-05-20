@@ -19,15 +19,15 @@ public class Conta {
     private String observacao;
     private String imagem;
     @ManyToOne
-    @JoinColumn (name = "status_enum")
+    @JoinColumn (name = "status_id")
     private Status status;
     @ManyToOne
-    @JoinColumn (name = "origem_enum")
+    @JoinColumn (name = "origem_id")
     private Origem origem;
     @ManyToOne
-    @JoinColumn (name = "categoria_enum")
+    @JoinColumn (name = "categoria_id")
     private Categoria categoria;
     @ManyToOne
     @JoinColumn (name = "usuario_id")
-    private User usuario;
+    private User user;
 }
