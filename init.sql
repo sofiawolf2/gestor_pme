@@ -1,7 +1,7 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE IF NOT EXISTS status (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     descricao VARCHAR(100) NOT NULL
 );
 
@@ -12,23 +12,23 @@ INSERT INTO status (id, descricao) VALUES
 (4,'CANCELADA'),
 (5,'PARCELADA'),
 (6,'ESTORNADA'),
-(7,'EM_DISPUTA');
+(7,'EM DISPUTA');
 
 CREATE TABLE IF NOT EXISTS categoria(
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     descricao VARCHAR(100) NOT NULL
 );
 
 INSERT INTO categoria (id, descricao) VALUES
-(1,'DESPESA_FIXA'),
-(2,'DESPESA_VARIAVEL'),
-(3,'RECEITA_RECORRENTE'),
-(4,'RECEITA_VARIAVEL'),
-(5,'IMPOSTOS_TAXAS'),
+(1,'DESPESA FIXA'),
+(2,'DESPESA VARIAVEL'),
+(3,'RECEITA RECORRENTE'),
+(4,'RECEITA VARIAVEL'),
+(5,'IMPOSTOS TAXAS'),
 (6,'INVESTIMENTOS');
 
 CREATE TABLE IF NOT EXISTS origem (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     descricao VARCHAR(100) NOT NULL
 );
 
@@ -60,7 +60,7 @@ INSERT INTO "user" (id, nome, login, senha, email, role_id) VALUES
 ('f3a6df49-8b26-4890-9b56-2ddc94e8f1f1', 'User Teste', 'teste', '$2a$12$ndx7/NNxNAbUGeBwsT62oujXqSBGU/wOIiWO4O3UGbYs0WjkyJM9i','teste@gmail.com', 2);
 
 CREATE TABLE IF NOT EXISTS conta (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     vencimento DATE NOT NULL,
     descricao VARCHAR (100) NOT NULL,
     valor DOUBLE PRECISION NOT NULL,
