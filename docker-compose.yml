@@ -22,7 +22,7 @@ services:
     networks:
       - gestorpmenetwork
     ports:
-      - "8005:8005"
+      - "8007:8007"
     depends_on:
       - db
 
