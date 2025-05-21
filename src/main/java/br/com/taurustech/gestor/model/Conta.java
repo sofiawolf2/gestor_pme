@@ -1,6 +1,9 @@
 package br.com.taurustech.gestor.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.Date;
@@ -10,24 +13,36 @@ public class Conta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Future(message = "campo deve ser uma data futura")
+    @NotNull(message = "campo obrigatório")
     private Date vencimento;
+
     @Column(length = 100)
+    @NotBlank(message = "campo obrigatório")
     private String descricao;
+
+    @NotNull(message = "campo obrigatório")
     private Double valor;
+
     @Column(name = "data_pagamento")
     private Date dataPagamento;
+
+
     private String observacao;
     private String imagem;
-    @ManyToOne
+
+
+    @ManyToOne @NotNull(message = "campo obrigatório")
     @JoinColumn (name = "status_id")
     private Status status;
-    @ManyToOne
+    @ManyToOne @NotNull(message = "campo obrigatório")
     @JoinColumn (name = "origem_id")
     private Origem origem;
-    @ManyToOne
+    @ManyToOne @NotNull(message = "campo obrigatório")
     @JoinColumn (name = "categoria_id")
     private Categoria categoria;
-    @ManyToOne
-    @JoinColumn (name = "usuario_id")
+    @ManyToOne @NotNull(message = "campo obrigatório")
+    @JoinColumn (name = "user_id")
     private User user;
 }
