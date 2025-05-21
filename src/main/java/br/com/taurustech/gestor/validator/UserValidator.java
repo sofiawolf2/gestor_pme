@@ -7,10 +7,10 @@ import br.com.taurustech.gestor.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.UUID;
 
-import static br.com.taurustech.gestor.validator.ValidatorUtil.gerarErroValidation;
-import static br.com.taurustech.gestor.validator.ValidatorUtil.validarRole;
+import static br.com.taurustech.gestor.validator.ValidatorUtil.*;
 
 @Component
 @RequiredArgsConstructor
@@ -48,5 +48,9 @@ public class UserValidator {
     public void validarAdmin(UserDTO dto, UUID id){
         var admin = userRpository.findAdmin();
         if (dto.getRole().equals("ROLE_ADMIN") &&  admin!=null && !admin.getId().equals(id) ) gerarErroValidation("role", "usuário admin já cadastrado.");
+    }
+
+    public boolean validarIdUser(String id){
+        return userRpository.existsById(Objects.requireNonNull(validarUUID(id)));
     }
 }

@@ -1,7 +1,6 @@
 package br.com.taurustech.gestor.validator;
 
 
-import br.com.taurustech.gestor.model.Role;
 import br.com.taurustech.gestor.service.RoleService;
 import jakarta.validation.ConstraintViolationException;
 
@@ -19,11 +18,10 @@ public class ValidatorUtil {
         throw new ConstraintViolationException(violations);
     }
 
-    public static Role validarRole(String nome, RoleService service) {
+    public static void validarRole(String nome, RoleService service) {
         if (!service.existeByNome(nome)){
             gerarErroValidation("role", "campo inválido");
         }
-        return service.buscarNome(nome);
     }
 
     public static UUID validarUUID (String texto){

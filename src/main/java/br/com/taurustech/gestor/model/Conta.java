@@ -8,7 +8,7 @@ import java.util.Date;
 @Entity
 public class Conta {
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Date vencimento;
     @Column(length = 100)
