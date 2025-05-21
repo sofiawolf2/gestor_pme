@@ -5,45 +5,45 @@ CREATE TABLE IF NOT EXISTS status (
     descricao VARCHAR(100) NOT NULL
 );
 
-INSERT INTO status (id, descricao) VALUES
-(1,'ABERTA'),
-(2,'VENCIDA'),
-(3,'PAGA'),
-(4,'CANCELADA'),
-(5,'PARCELADA'),
-(6,'ESTORNADA'),
-(7,'EM DISPUTA');
+INSERT INTO status (descricao) VALUES
+('ABERTA'),
+('VENCIDA'),
+('PAGA'),
+('CANCELADA'),
+('PARCELADA'),
+('ESTORNADA'),
+('EM DISPUTA');
 
 CREATE TABLE IF NOT EXISTS categoria(
     id SERIAL PRIMARY KEY,
     descricao VARCHAR(100) NOT NULL
 );
 
-INSERT INTO categoria (id, descricao) VALUES
-(1,'DESPESA FIXA'),
-(2,'DESPESA VARIAVEL'),
-(3,'RECEITA RECORRENTE'),
-(4,'RECEITA VARIAVEL'),
-(5,'IMPOSTOS TAXAS'),
-(6,'INVESTIMENTOS');
+INSERT INTO categoria (descricao) VALUES
+('DESPESA FIXA'),
+('DESPESA VARIAVEL'),
+('RECEITA RECORRENTE'),
+('RECEITA VARIAVEL'),
+('IMPOSTOS TAXAS'),
+('INVESTIMENTOS');
 
 CREATE TABLE IF NOT EXISTS origem (
     id SERIAL PRIMARY KEY,
     descricao VARCHAR(100) NOT NULL
 );
 
-INSERT INTO origem (id, descricao) VALUES
-(1,'FORNECEDOR'),
-(2,'CLIENTE'),
-(3,'FUNCIONARIO'),
-(4,'INSTITUICAO_FINANCEIRA'),
-(5,'GOVERNO');
+INSERT INTO origem (descricao) VALUES
+('FORNECEDOR'),
+('CLIENTE'),
+('FUNCIONARIO'),
+('INSTITUICAO FINANCEIRA'),
+('GOVERNO');
 
 CREATE TABLE IF NOT EXISTS role (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(20)
 );
-INSERT INTO role (id, nome) VALUES (1,'ROLE_ADMIN'), (2,'ROLE_USER');
+INSERT INTO role (nome) VALUES ('ROLE_ADMIN'), ('ROLE_USER');
 
 CREATE TABLE IF NOT EXISTS "user" (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
@@ -77,6 +77,6 @@ CREATE TABLE IF NOT EXISTS conta (
     FOREIGN KEY (user_id) REFERENCES "user" (id)
 );
 
-INSERT INTO conta (id, vencimento, descricao, valor, data_pagamento, observacao, imagem, status_id, origem_id, categoria_id, user_id)
+INSERT INTO conta ( vencimento, descricao, valor, data_pagamento, observacao, imagem, status_id, origem_id, categoria_id, user_id)
 VALUES
-(1, '2026-01-01', 'Conta teste', 2000.00, null, 'é isso', 'sem imagem', 1, 1, 1, 'f3a6df49-8b26-4890-9b56-2ddc94e8f1f1');
+('2026-01-01', 'Conta teste', 2000.00, null, 'é isso', 'sem imagem', 1, 1, 1, 'f3a6df49-8b26-4890-9b56-2ddc94e8f1f1');
