@@ -2,20 +2,15 @@ package br.com.taurustech.gestor.validator;
 
 
 import br.com.taurustech.gestor.service.RoleService;
-import jakarta.validation.ConstraintViolationException;
 
-import java.util.Collections;
-import java.util.Set;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.UUID;
+
+import static br.com.taurustech.gestor.validator.ObjectValidation.gerarErroValidation;
 
 public class ValidatorUtil {
     private ValidatorUtil() {
-    }
-
-    public static void gerarErroValidation(String atributo, String mensagemErro){
-        ObjectValidation validation = new ObjectValidation(atributo,mensagemErro);
-        Set<ObjectValidation> violations = Collections.singleton(validation);
-        throw new ConstraintViolationException(violations);
     }
 
     public static void validarRole(String nome, RoleService service) {
@@ -32,6 +27,32 @@ public class ValidatorUtil {
             return null;
         }
     }
+
+    public static void isDate(String valor, String atributo) {
+        try {
+            LocalDate.parse(valor);
+        } catch (DateTimeParseException e) {
+            gerarErroValidation(atributo, "deve ser uma Data seguindo o formato AAAA-MM-DD");
+        }
+    }
+
+    public static void isInteger(String valor, String atributo) {
+        try {
+            Integer.parseInt(valor);
+        } catch (NumberFormatException e) {
+            gerarErroValidation(atributo, "deve ser um inteiro");
+        }
+    }
+
+    public static void isDouble(String valor, String atributo) {
+        try {
+            Double.parseDouble(valor);
+        } catch (NumberFormatException e) {
+            gerarErroValidation(atributo, "deve ser um valor numérico com casas decimais");
+        }
+    }
+
+
 
 
 }

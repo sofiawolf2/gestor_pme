@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.Objects;
 import java.util.UUID;
 
+import static br.com.taurustech.gestor.validator.ObjectValidation.gerarErroValidation;
 import static br.com.taurustech.gestor.validator.ValidatorUtil.*;
 
 @Component

@@ -1,12 +1,14 @@
 package br.com.taurustech.gestor.validator;
 
 import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Path;
 import jakarta.validation.metadata.ConstraintDescriptor;
 import org.hibernate.validator.internal.engine.path.PathImpl;
 
-public class ObjectValidation implements ConstraintViolation<Object> {
+import java.util.Collections;
 
+public class ObjectValidation implements ConstraintViolation<Object> {
     private final String atributo;
     private final String mensagemErro;
 
@@ -66,7 +68,12 @@ public class ObjectValidation implements ConstraintViolation<Object> {
     }
 
     @Override
-    public <U> U unwrap(Class<U> type) {
-        throw new UnsupportedOperationException("Não suportado!");
+    public <U> U unwrap(Class<U> aClass) {
+        return null;
+    }
+
+    public static void gerarErroValidation(String atributo, String mensagemErro) {
+        ConstraintViolation<?> violation = new ObjectValidation(atributo, mensagemErro);
+        throw new ConstraintViolationException(Collections.singleton(violation));
     }
 }
