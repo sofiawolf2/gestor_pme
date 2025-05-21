@@ -4,11 +4,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Data;
 
-@Entity
-public record Categoria (
+@Entity @Data
+public class Categoria {
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        Integer id,
-        String descricao) {
+        private Integer id;
+        private String descricao;
 }
