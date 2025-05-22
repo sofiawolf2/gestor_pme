@@ -12,4 +12,11 @@ public class Categoria {
         @GeneratedValue(strategy = GenerationType.AUTO)
         private Integer id;
         private String descricao;
+
+        public Categoria(String descricao) {
+                this.descricao = descricao;
+        }
+
+        public Categoria() {
+        }
 }

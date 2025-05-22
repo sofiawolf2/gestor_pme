@@ -12,4 +12,11 @@ public class Origem {
         @GeneratedValue(strategy = GenerationType.AUTO)
         private Integer id;
         private String descricao;
+
+        public Origem(String descricao) {
+                this.descricao = descricao;
+        }
+
+        public Origem() {
+        }
 }
