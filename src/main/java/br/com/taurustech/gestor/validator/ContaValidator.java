@@ -12,10 +12,14 @@ import static br.com.taurustech.gestor.validator.ValidatorUtil.isDouble;
 public class ContaValidator {
 
 
-    public void validarDatasConta(ContaDTO dto){
+    public void validarDatasConta(ContaDTO dto, Boolean atualizacao){
+
+        if (Boolean.TRUE.equals(atualizacao)) isDate(dto.getDataPagamento(), "dataPagamento");
+        else {
         isDate(dto.getVencimento(), "vencimento");
         isDate(dto.getDataPagamento(), "dataPagamento");
         isDouble(dto.getValor(), "valor");
+        }
     }
 
 

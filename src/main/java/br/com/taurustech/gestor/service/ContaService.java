@@ -54,9 +54,9 @@ public class ContaService {
         return conta;
     }
 
-    public void cadastrar(ContaDTO contaDTO) {
-        contaValidator.validarDatasConta(contaDTO);
-        contaRepository.save(gerarEntidade(contaDTO));
+    public void cadastrar(ContaDTO dto) {
+        contaValidator.validarDatasConta(dto, false);
+        contaRepository.save(gerarEntidade(dto));
     }
 
     public List<ContaDTO> listarContas(String status, String origem, String categoria) {
@@ -84,5 +84,23 @@ public class ContaService {
         var conta = buscarValidando(id);
         verificarUser(conta);
         contaRepository.deleteById(conta.getId());
+    }
+
+    public void atualizarPatch(ContaDTO dto, String id) {
+        var contaAntes = buscarValidando(id);
+        verificarUser(contaAntes);
+
+        var contaGerada = gerarEntidade(dto);
+
+        if (dto.getDataPagamento()!=null) {
+            contaValidator.validarDatasConta(dto, true);
+            contaAntes.setDataPagamento(contaGerada.getDataPagamento());
+        }
+        if (dto.getObservacao()!=null) contaAntes.setObservacao(contaGerada.getObservacao());
+        if (dto.getImagem()!=null) contaAntes.setImagem(contaGerada.getImagem());
+        if (dto.getStatus()!=null) contaAntes.setStatus(contaGerada.getStatus());
+        if (dto.getCategoria()!=null) contaAntes.setCategoria(contaGerada.getCategoria());
+
+        contaRepository.save(contaAntes);
     }
 }

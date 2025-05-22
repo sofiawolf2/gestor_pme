@@ -42,6 +42,12 @@ public class ContaController {
         return ResponseEntity.status(200).build();
     }
 
+    @PatchMapping("/{id}")
+    @Secured({"ROLE_ADMIN"})
+    public ResponseEntity<Void> atualizarId(@RequestBody ContaDTO conta, @PathVariable String id){
+        service.atualizarPatch(conta,id);
+        return ResponseEntity.noContent().build();
+    }
 
 
 }
