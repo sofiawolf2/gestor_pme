@@ -16,7 +16,6 @@ public class ContaValidator {
         isDate(dto.getVencimento(), "vencimento");
         isDate(dto.getDataPagamento(), "dataPagamento");
         isDouble(dto.getValor(), "valor");
-
     }
 
 
