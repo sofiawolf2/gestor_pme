@@ -8,6 +8,8 @@ import br.com.taurustech.gestor.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,11 @@ public class UserService {
     private User pesquisarValidando(String id){
         return userRepository.findById(Objects.requireNonNull(validarUUID(id))).orElseThrow(() -> new ObjetoNaoEncontradoException(erroNotFound));
     }
+    public User buscarUserAtual(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return buscarLogin(authentication.getName());
+    }
+
     public User buscarUserID (String id){
         return pesquisarValidando(id);
     }
