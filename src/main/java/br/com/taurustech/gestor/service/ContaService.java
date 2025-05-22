@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static br.com.taurustech.gestor.validator.ValidatorUtil.isInteger;
+
 @Service @RequiredArgsConstructor
 public class ContaService {
     private final ContaRepository contaRepository;
@@ -29,6 +31,14 @@ public class ContaService {
 
 
     String erroNotFound = "Conta não encontrada";
+
+    private Conta buscarValidando (String id){
+        return contaRepository.findById(isInteger(id, "id")).orElseThrow(() -> new ObjetoNaoEncontradoException(erroNotFound));
+    }
+    private void verificarUser (Conta conta){
+        if (conta.getUser().getId()!= userService.buscarUserAtual().getId()) throw new ObjetoNaoEncontradoException(erroNotFound);
+    }
+
 
     private Conta gerarEntidade (ContaDTO dto){
         Conta conta = dto.gerarContaSemEntidades();
@@ -62,5 +72,17 @@ public class ContaService {
         var lista = contaRepository.findAll(contaExample);
         if (lista.isEmpty()) throw new ObjetoNaoEncontradoException(erroNotFound);
         return lista.stream().map(ContaDTO::createOutput).toList();
+    }
+
+    public ContaDTO buscarById(String id) {
+        var conta = buscarValidando(id);
+        verificarUser(conta);
+        return ContaDTO.createOutput(conta);
+    }
+
+    public void deleteById(String id) {
+        var conta = buscarValidando(id);
+        verificarUser(conta);
+        contaRepository.deleteById(conta.getId());
     }
 }

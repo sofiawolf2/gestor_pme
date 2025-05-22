@@ -29,5 +29,19 @@ public class ContaController {
                                                         @RequestParam (required = false) String categoria){
         return ResponseEntity.ok(service.listarContas(status,origem,categoria));
     }
+    @GetMapping("/{id}")
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    public ResponseEntity <ContaDTO> getContaById(@PathVariable String id){
+        return ResponseEntity.ok(service.buscarById(id));
+    }
+
+    @DeleteMapping("/{id}")
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    public ResponseEntity <Void> deleteContaById(@PathVariable String id){
+        service.deleteById(id);
+        return ResponseEntity.status(200).build();
+    }
+
+
 
 }
