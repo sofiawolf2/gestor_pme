@@ -33,16 +33,16 @@ public class Conta {
     private String imagem;
 
 
-    @ManyToOne @NotNull(message = "campo obrigatório")
+    @ManyToOne @NotNull(message = "campo inválido")
     @JoinColumn (name = "status_id")
     private Status status;
-    @ManyToOne @NotNull(message = "campo obrigatório")
+    @ManyToOne @NotNull(message = "campo inválido")
     @JoinColumn (name = "origem_id")
     private Origem origem;
-    @ManyToOne @NotNull(message = "campo obrigatório")
+    @ManyToOne @NotNull(message = "campo inválido")
     @JoinColumn (name = "categoria_id")
     private Categoria categoria;
-    @ManyToOne @NotNull(message = "campo obrigatório")
+    @ManyToOne @NotNull(message = "campo inválido")
     @JoinColumn (name = "user_id")
     private User user;
 }
