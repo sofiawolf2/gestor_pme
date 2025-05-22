@@ -36,12 +36,13 @@ public class ValidatorUtil {
         }
     }
 
-    public static void isInteger(String valor, String atributo) {
+    public static Integer isInteger(String valor, String atributo) {
         try {
-            Integer.parseInt(valor);
+            return Integer.parseInt(valor);
         } catch (NumberFormatException e) {
             gerarErroValidation(atributo, "deve ser um inteiro");
         }
+        return 0;
     }
 
     public static void isDouble(String valor, String atributo) {
