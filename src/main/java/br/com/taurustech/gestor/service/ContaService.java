@@ -87,6 +87,7 @@ public class ContaService {
         var conta = buscarValidando(id);
         verificarUser(conta);
         contaRepository.deleteById(conta.getId());
+        imagemService.deletarImagemMemoria(conta.getImagem());
     }
 
     public void atualizarPatch(ContaDTO dto, String id) {
@@ -100,7 +101,11 @@ public class ContaService {
             contaAntes.setDataPagamento(contaGerada.getDataPagamento());
         }
         if (dto.getObservacao()!=null) contaAntes.setObservacao(contaGerada.getObservacao());
-        if (dto.getImagem()!=null) contaAntes.setImagem(contaGerada.getImagem());
+        if (dto.getImagem()!=null){
+            if (contaAntes.getImagem()==null){
+                contaAntes.setImagem(imagemService.cadastrar(contaGerada.getImagem()));
+            }else contaAntes.setImagem(imagemService.atualizar(contaGerada.getImagem(), contaAntes.getImagem()));
+        }
         if (dto.getStatus()!=null) contaAntes.setStatus(contaGerada.getStatus());
         if (dto.getCategoria()!=null) contaAntes.setCategoria(contaGerada.getCategoria());
 

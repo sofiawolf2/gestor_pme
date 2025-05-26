@@ -52,7 +52,7 @@ public class ImagemService {
                 do{
                     nomeImagemFinal = UUID.randomUUID() + ".png";
                     existeImagemMemoriaPorNome(nomeImagemFinal);
-                }while (!existeImagemMemoriaPorNome(nomeImagemFinal));
+                }while (existeImagemMemoriaPorNome(nomeImagemFinal));
             } else {
                 if (!deletarImagemMemoria(idNomeImagem)) gerarErroValidation("imagem", "não foi possivel atualizar");
                 nomeImagemFinal = idNomeImagem;
@@ -74,7 +74,7 @@ public class ImagemService {
     public Path getCaminho (String nome){
         return Paths.get(pasta + nome).toAbsolutePath();
     }
-    private boolean deletarImagemMemoria (String nome){
+    public boolean deletarImagemMemoria (String nome){
 
         File imagem = new File(String.valueOf(getCaminho(nome)));
         if (imagem.exists()) {

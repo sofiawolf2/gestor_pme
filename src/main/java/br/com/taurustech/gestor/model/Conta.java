@@ -28,10 +28,7 @@ public class Conta {
     @Column(name = "data_pagamento")
     private Date dataPagamento;
 
-
     private String observacao;
-
-    @Column(name = "imagem_id_nome")
     private String imagem;
 
     @ManyToOne @NotNull(message = "campo inválido")
