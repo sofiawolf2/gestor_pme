@@ -36,7 +36,8 @@ public class ContaService {
         return contaRepository.findById(isInteger(id, "id")).orElseThrow(() -> new ObjetoNaoEncontradoException(erroNotFound));
     }
     private void verificarUser (Conta conta){
-        if (conta.getUser().getId()!= userService.buscarUserAtual().getId()) throw new ObjetoNaoEncontradoException(erroNotFound);
+        if (conta.getUser().getId()!= userService.buscarUserAtual().getId() && !userService.buscarUserAtual().getRole().getNome().equals("ROLE_ADMIN"))
+            throw new ObjetoNaoEncontradoException(erroNotFound);
     }
 
 
