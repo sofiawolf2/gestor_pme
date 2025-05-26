@@ -28,6 +28,7 @@ public class ContaService {
     private final OrigemRepository origemRepository;
     private final CategoriaRepository categoriaRepository;
     private final UserService userService;
+    private final ImagemService imagemService;
 
 
     String erroNotFound = "Conta não encontrada";
@@ -57,6 +58,7 @@ public class ContaService {
 
     public void cadastrar(ContaDTO dto) {
         contaValidator.validarDatasConta(dto, false);
+        if (dto.getImagem() != null) dto.setImagem(imagemService.cadastrar(dto.getImagem()));
         contaRepository.save(gerarEntidade(dto));
     }
 

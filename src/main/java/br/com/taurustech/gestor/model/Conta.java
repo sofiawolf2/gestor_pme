@@ -30,8 +30,9 @@ public class Conta {
 
 
     private String observacao;
-    private String imagem;
 
+    @Column(name = "imagem_id_nome")
+    private String imagem;
 
     @ManyToOne @NotNull(message = "campo inválido")
     @JoinColumn (name = "status_id")

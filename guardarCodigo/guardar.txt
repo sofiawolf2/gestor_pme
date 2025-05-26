@@ -1,0 +1,6 @@
+private String getBase64(String caminho) {
+        try {
+            byte[] bytes = Files.readAllBytes(Paths.get(caminho));
+            return Base64.encodeBase64String(bytes);
+        } catch (IOException e){ return "";}
+    }
