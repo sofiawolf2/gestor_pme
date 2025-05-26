@@ -34,6 +34,11 @@ public class ContaController {
     public ResponseEntity <ContaDTO> getContaById(@PathVariable String id){
         return ResponseEntity.ok(service.buscarById(id));
     }
+    @GetMapping("/{id}/png")
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    public ResponseEntity <byte[]> getImagemContaById(@PathVariable String id){
+        return service.imprimirImagemConta(id);
+    }
 
     @DeleteMapping("/{id}")
     @Secured({"ROLE_USER", "ROLE_ADMIN"})

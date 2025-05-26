@@ -14,6 +14,7 @@ import br.com.taurustech.gestor.validator.ContaValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -110,5 +111,9 @@ public class ContaService {
         if (dto.getCategoria()!=null) contaAntes.setCategoria(contaGerada.getCategoria());
 
         contaRepository.save(contaAntes);
+    }
+
+    public ResponseEntity<byte[]> imprimirImagemConta(String id) {
+       return imagemService.imprimirPNG(buscarById(id).getImagem());
     }
 }
