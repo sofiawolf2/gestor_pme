@@ -80,3 +80,5 @@ CREATE TABLE IF NOT EXISTS conta (
 INSERT INTO conta ( vencimento, descricao, valor, data_pagamento, observacao, imagem, status_id, origem_id, categoria_id, user_id)
 VALUES
 ('2026-01-01', 'Conta teste', 2000.00, null, 'é isso', null, 1, 1, 1, 'f3a6df49-8b26-4890-9b56-2ddc94e8f1f1');
+('3025-01-05', 'Segunda conta teste', 3000.00, null, 'testando', null, 2,2,2, 'f3a6df49-8b26-4890-9b56-2ddc94e8f1f1');
+('3025-01-05', 'Terceira conta teste', 3000.00, null, 'testando3', null, 3,2,5, 'e9b1f85d-4a58-4c2e-bb8b-3a41f8a9d1c7');

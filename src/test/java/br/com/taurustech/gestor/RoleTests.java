@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestPropertySource(properties = "spring.datasource.url=jdbc:postgresql://localhost:5435/gestordb")
 @SpringBootTest(classes = Application.class)
- class RoleTests {
+class RoleTests {
     @Autowired
     private RoleRepository repository;
 
