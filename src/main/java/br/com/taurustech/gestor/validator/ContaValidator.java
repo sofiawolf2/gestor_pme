@@ -14,11 +14,11 @@ public class ContaValidator {
 
     public void validarDatasConta(ContaDTO dto, Boolean atualizacao){
 
-        if (Boolean.TRUE.equals(atualizacao)) isDate(dto.getDataPagamento(), "dataPagamento");
+        if (Boolean.TRUE.equals(atualizacao) && dto.getDataPagamento()!=null) isDate(dto.getDataPagamento(), "dataPagamento");
         else {
         isDate(dto.getVencimento(), "vencimento");
-        isDate(dto.getDataPagamento(), "dataPagamento");
         isDouble(dto.getValor(), "valor");
+        if (dto.getDataPagamento()!= null)isDate(dto.getDataPagamento(), "dataPagamento");
         }
     }
 

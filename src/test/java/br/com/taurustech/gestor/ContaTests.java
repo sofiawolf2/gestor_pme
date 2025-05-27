@@ -25,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ContaTests extends BaseAPITest{
     private final ContaService contaService;
     private final ContaRepository contaRepository;
+    String imagem64Exemplo = "iVBORw0KGgoAAAANSUhEUgAAAAcAAAAGCAYAAAAPDoR2AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAvSURBVBhXYzQwMPjPgA6s8hkW+D9jYIJyUYCVqSHDyzMnGbDrhAKsOmGAXEkGBgCmsgjFVcuAawAAAABJRU5ErkJggg==";
 
     ContaTests(ContaService contaService, ContaRepository contaRepository) {
         this.contaService = contaService;
@@ -36,12 +37,22 @@ class ContaTests extends BaseAPITest{
         contaService.deletarTodosMenos(List.of(1,2,3));
     }
 
-    private ResponseEntity<ContaDTO> getConta(String id) { return get("/api/v1/contas/" + id, ContaDTO.class); }
+    ResponseEntity<ContaDTO> getConta(String id) { return get("/api/v1/contas/" + id, ContaDTO.class); }
 
-    private ResponseEntity<List<ContaDTO>> getListaContas(String status, String origem) {
+    ResponseEntity<byte[]> getContaImagem(String id) { return get("/api/v1/contas/" + id + "/png", byte[].class); }
+
+    void deleteContaImagem(String id) { delete("/api/v1/contas/" + id + "/png", Void.class); }
+
+    void postConta(ContaDTO conta) { post("/api/v1/contas", conta, Void .class);}
+
+    void pacthConta(ContaDTO conta, String id) {patch("/api/v1/contas/" + id, conta, Void.class);}
+
+    void deleteConta(String id) { delete("/api/v1/contas/" + id, Void.class); }
+
+    ResponseEntity<List<ContaDTO>> getListaContas(String status, String origem) {
         String url = "/api/v1/contas?";
         if (status != null) url = url + "status=" + status + "&";
-        if (origem != null) url = url + "origem=" + origem + "&";
+        if (origem != null) url = url + "origem=" + origem;
         if (url.endsWith("&") || url.endsWith("?")) url = url.substring(0, url.length() - 1);
         HttpHeaders headers = getHeaders();
 
@@ -53,15 +64,26 @@ class ContaTests extends BaseAPITest{
                 });
     }
 
-    private void postConta(ContaDTO conta) {
-        HttpHeaders headers = getHeaders();
 
-        rest.exchange(
-                "/api/v1/contas",
-                HttpMethod.POST,
-                new HttpEntity<>(conta, headers),
-                Void.class
-        );
+    private ContaDTO gerarContaBasicaComDescricao (String descricao){
+        var dto = new ContaDTO();
+        dto.setVencimento("2026-01-01");
+        dto.setDescricao(descricao);
+        dto.setValor("100.00");
+        dto.setStatus("aberta");
+        dto.setOrigem("fornecedor");
+        dto.setCategoria("despesa fixa");
+
+        return dto;
+    }
+
+    private Conta buscarSalvaByDescricao (String descricao){
+        var todos = contaRepository.findAll();
+        assertFalse(todos.isEmpty());
+        for (Conta a : todos) {
+            if (a.getDescricao().equals(descricao)) return a;
+        }
+        return null;
     }
 
     @Test
@@ -101,19 +123,71 @@ class ContaTests extends BaseAPITest{
     }
 
     @Test
-    void testePostConta()  {
-        var dto = new ContaDTO();
-        dto.setVencimento("2025-09-12");
-        dto.setDescricao("criando conta direto do teste");
-        dto.setValor("20.00");
-        dto.setStatus("1");
-        dto.setOrigem("1");
-        dto.setCategoria("1");
-        postConta(dto);
-        var todos = contaRepository.findAll();
-        assertFalse(todos.isEmpty());
-        for (Conta a: todos){
-            if (a.getDescricao().equals("criando conta direto do teste")) break;
-        }
+    void testePostEDeleteConta()  {
+        String descricao = "criando conta direto do teste";
+        var input = gerarContaBasicaComDescricao(descricao);
+        assertNull(buscarSalvaByDescricao(descricao)); // conta não salva
+
+        postConta(input);
+
+        var contaSalva = buscarSalvaByDescricao(descricao);
+        assertNotNull(contaSalva); // conta salva
+
+        deleteConta(contaSalva.getId().toString()); // deletar conta por id
+
+        assertNull(buscarSalvaByDescricao(descricao)); // conta não existe mais
+
     }
+
+    @Test
+    void testePacth(){
+        var output = getConta("3");
+        assertNotNull(output.getBody());
+        String categoriaAntes = output.getBody().getCategoria();
+        String observacaoAntes = output.getBody().getObservacao();
+        var contaPacth = new ContaDTO();
+        contaPacth.setCategoria("DespESa fIxA");
+        contaPacth.setObservacao("teste atualizando usando Pacth");
+
+        pacthConta(contaPacth, "3");
+
+        output = getConta("3");
+        assertNotNull(output.getBody());
+
+        assertNotEquals(categoriaAntes, output.getBody().getCategoria());
+        assertNotEquals(observacaoAntes, output.getBody().getObservacao());
+
+        assertEquals("DESPESA FIXA", output.getBody().getCategoria());
+        assertEquals("teste atualizando usando Pacth", output.getBody().getObservacao());
+
+        // desfazendo mudanças:
+        contaPacth.setCategoria(categoriaAntes);
+        contaPacth.setObservacao(observacaoAntes);
+        pacthConta(contaPacth, "3");
+    }
+
+    @Test void testeGetDeleteImagem(){
+        var contaRetorno = getConta("1");
+        assertNotNull(contaRetorno.getBody()); // veio uma conta
+        assertNull((contaRetorno.getBody().getImagem())); // a conta não tem imagem
+        assertEquals(HttpStatus.NOT_FOUND, getContaImagem("1").getStatusCode()); // imagem não encontrada
+
+        var dto = new ContaDTO();
+        dto.setImagem(imagem64Exemplo);
+        pacthConta(dto,"1");// salva imagem
+
+        var imagemRetorno = getContaImagem("1");
+        assertNotNull(imagemRetorno.getBody()); // veio uma imagem
+        assertNotEquals(HttpStatus.NOT_FOUND, imagemRetorno.getStatusCode()); // imagem encontrada
+        assertEquals(byte[].class, imagemRetorno.getBody().getClass()); // imagem do tipo byte[]
+
+        deleteContaImagem("1"); //deleta imagem
+
+        //imagem não existe mais
+        contaRetorno = getConta("1");
+        assertNotNull(contaRetorno.getBody()); // veio uma conta
+        assertNull((contaRetorno.getBody().getImagem())); // a conta não tem imagem
+        assertEquals(HttpStatus.NOT_FOUND, getContaImagem("1").getStatusCode()); // imagem não encontrada
+    }
+
 }

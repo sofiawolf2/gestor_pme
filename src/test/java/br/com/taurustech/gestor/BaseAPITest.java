@@ -59,7 +59,7 @@ public abstract class BaseAPITest {
     <T> ResponseEntity<T> put(String url, Object body, Class<T> responseType) {
         HttpHeaders headers = getHeaders();
 
-        return rest.exchange(url, POST, new HttpEntity<>(body, headers), responseType);
+        return rest.exchange(url, PUT, new HttpEntity<>(body, headers), responseType);
     }
     <T> ResponseEntity<T> patch(String url, Object body, Class<T> responseType) {
         HttpHeaders headers = getHeaders();
