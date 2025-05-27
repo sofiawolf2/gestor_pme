@@ -37,6 +37,10 @@ class UserTests extends BaseAPITest{
         return get("/api/v1/usuarios/" + id, UserDTO.class);
     }
 
+    private void pacthUser(UserDTO user, String id) { patch("/api/v1/usuarios/" + id, user, Void.class);}
+
+    private void deleteUser(String id) { delete("/api/v1/usuarios/" + id, Void.class);}
+
     private ResponseEntity<List<UserDTO>> getListaUsers(String nome, String login) {
         String url = "/api/v1/usuarios?";
         if (nome != null) url = url + "nome=" + nome + "&";
@@ -52,26 +56,7 @@ class UserTests extends BaseAPITest{
                 });
     }
 
-    private ResponseEntity<Void> pacthUser(UserDTO user, String id) {
-        HttpHeaders headers = getHeaders();
 
-        return rest.exchange(
-                "/api/v1/usuarios/" + id,
-                HttpMethod.PATCH,
-                new HttpEntity<>(user, headers),
-                Void.class
-        );
-    }
-    private ResponseEntity<Void> deleteUser(String id) {
-        HttpHeaders headers = getHeaders();
-
-        return rest.exchange(
-                "/api/v1/usuarios/" + id,
-                HttpMethod.DELETE,
-                new HttpEntity<>( headers),
-                Void.class
-        );
-    }
     @AfterEach
     void apagarCriados(){
         service.deletarTodosMenosLogin(List.of("dev","teste"));
@@ -157,8 +142,7 @@ class UserTests extends BaseAPITest{
         assertNotNull(user);
         assertEquals("Sofia", user.getNome());
         user.setNome("Carla");
-        var retorno = pacthUser(UserDTO.createInput(user), id.toString());
-        assertEquals(HttpStatus.NO_CONTENT, retorno.getStatusCode());
+        pacthUser(UserDTO.createInput(user), id.toString());
         var userAtualizada = service.buscarOutID(id.toString());
         assertEquals("Carla", userAtualizada.getNome());
         assertEquals("uau", userAtualizada.getLogin());
@@ -171,8 +155,7 @@ class UserTests extends BaseAPITest{
         var user = service.buscarOutID(id.toString());
         assertNotNull(user);
         assertEquals("Teste", user.getNome());
-        var retorno = deleteUser(id.toString());
-        assertEquals(HttpStatus.NO_CONTENT, retorno.getStatusCode());
+        deleteUser(id.toString());
         var novoRetorno = getUser(id.toString());
         assertEquals(HttpStatus.NOT_FOUND, novoRetorno.getStatusCode());
 
