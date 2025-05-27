@@ -4,7 +4,7 @@ import br.com.taurustech.gestor.exception.ObjetoNaoEncontradoException;
 import br.com.taurustech.gestor.model.User;
 import br.com.taurustech.gestor.model.dto.UserDTO;
 import br.com.taurustech.gestor.repository.UserRepository;
-import br.com.taurustech.gestor.validator.UserValidator;
+import br.com.taurustech.gestor.validator.entidade.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;

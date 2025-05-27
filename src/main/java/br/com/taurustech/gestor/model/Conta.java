@@ -1,5 +1,6 @@
 package br.com.taurustech.gestor.model;
 
+import br.com.taurustech.gestor.validator.ValidarCampo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
@@ -16,6 +17,7 @@ public class Conta {
 
     @Future(message = "campo deve ser uma data futura")
     @NotNull(message = "campo obrigatório")
+    @ValidarCampo(tipo = TipoValidacao.DATA, message = "campo deve ser uma Data seguindo o formato AAAA-MM-DD")
     private Date vencimento;
 
     @Column(length = 100)
@@ -23,9 +25,11 @@ public class Conta {
     private String descricao;
 
     @NotNull(message = "campo obrigatório")
+    @ValidarCampo(tipo = TipoValidacao.DOUBLE, message = "campo deve ser um número decimal")
     private Double valor;
 
     @Column(name = "data_pagamento")
+    @ValidarCampo(tipo = TipoValidacao.DATA, message = "campo deve ser uma Data seguindo o formato AAAA-MM-DD")
     private Date dataPagamento;
 
     private String observacao;

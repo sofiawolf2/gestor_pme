@@ -10,7 +10,6 @@ import br.com.taurustech.gestor.repository.CategoriaRepository;
 import br.com.taurustech.gestor.repository.ContaRepository;
 import br.com.taurustech.gestor.repository.OrigemRepository;
 import br.com.taurustech.gestor.repository.StatusRepository;
-import br.com.taurustech.gestor.validator.ContaValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -24,7 +23,6 @@ import static br.com.taurustech.gestor.validator.ValidatorUtil.isInteger;
 @Service @RequiredArgsConstructor
 public class ContaService {
     private final ContaRepository contaRepository;
-    private final ContaValidator contaValidator;
     private final StatusRepository statusRepository;
     private final OrigemRepository origemRepository;
     private final CategoriaRepository categoriaRepository;
@@ -57,10 +55,9 @@ public class ContaService {
         return conta;
     }
 
-    public void cadastrar(ContaDTO dto) {
-        contaValidator.validarDatasConta(dto, false);
+    public void cadastrar(Conta dto) {
         if (dto.getImagem() != null) dto.setImagem(imagemService.cadastrar(dto.getImagem()));
-        contaRepository.save(gerarEntidade(dto));
+        contaRepository.save(dto);
     }
 
     public List<ContaDTO> listarContas(String status, String origem, String categoria) {
@@ -99,7 +96,6 @@ public class ContaService {
         var contaGerada = gerarEntidade(dto);
 
         if (dto.getDataPagamento()!=null) {
-            contaValidator.validarDatasConta(dto, true);
             contaAntes.setDataPagamento(contaGerada.getDataPagamento());
         }
         if (dto.getObservacao()!=null) contaAntes.setObservacao(contaGerada.getObservacao());

@@ -3,8 +3,6 @@ package br.com.taurustech.gestor.validator;
 
 import br.com.taurustech.gestor.service.RoleService;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.UUID;
 
 import static br.com.taurustech.gestor.validator.ObjectValidation.gerarErroValidation;
@@ -28,13 +26,6 @@ public class ValidatorUtil {
         }
     }
 
-    public static void isDate(String valor, String atributo) {
-        try {
-            LocalDate.parse(valor);
-        } catch (DateTimeParseException e) {
-            gerarErroValidation(atributo, "deve ser uma Data seguindo o formato AAAA-MM-DD");
-        }
-    }
 
     public static Integer isInteger(String valor, String atributo) {
         try {
@@ -45,13 +36,6 @@ public class ValidatorUtil {
         return 0;
     }
 
-    public static void isDouble(String valor, String atributo) {
-        try {
-            Double.parseDouble(valor);
-        } catch (NumberFormatException e) {
-            gerarErroValidation(atributo, "deve ser um valor numérico com casas decimais");
-        }
-    }
 
 
 
