@@ -115,10 +115,13 @@ public class ContaService {
     }
 
     public ResponseEntity<byte[]> imprimirImagemConta(String id) {
-       return imagemService.imprimirPNG(buscarById(id).getImagem());
+        var conta = buscarById(id);
+        if (conta.getImagem() == null) throw new ObjetoNaoEncontradoException("Imagem não encontrada");
+       return imagemService.imprimirPNG(conta.getImagem());
     }
     public void deletarImagemById(String id) {
         var conta = buscarValidando(id);
+        if (conta.getImagem() == null) throw new ObjetoNaoEncontradoException("Imagem não encontrada");
         imagemService.deletarImagemMemoria(conta.getImagem());
         conta.setImagem(null);
         contaRepository.save(conta);
