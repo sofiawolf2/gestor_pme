@@ -55,9 +55,9 @@ public class ContaService {
         return conta;
     }
 
-    public void cadastrar(Conta dto) {
+    public void cadastrar(ContaDTO dto) {
         if (dto.getImagem() != null) dto.setImagem(imagemService.cadastrar(dto.getImagem()));
-        contaRepository.save(dto);
+        contaRepository.save(gerarEntidade(dto));
     }
 
     public List<ContaDTO> listarContas(String status, String origem, String categoria) {

@@ -36,9 +36,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             HttpHeaders headers,
             HttpStatusCode status,
             WebRequest request
-    ) { String erro = "erro";
+    ) {
+        String erro = "erro";
         if (ex.getMessage().contains("java.util.Date")) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ServletUtil.getJson(erro, "data inserida inválida"));
         if (ex.getMessage().contains("java.lang.Double")) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ServletUtil.getJson(erro, "número decimal inserido inválido"));
+        if (ex.getMessage().contains("java.lang.Boolean")) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ServletUtil.getJson(erro, "valor do tipo verdadeiro ou falso inserido inválido"));
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ServletUtil.getJson(erro, "estrutura inválida"));
     }
 
@@ -46,5 +49,4 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<String> handleObjetoNaoEncontradoException (ObjetoNaoEncontradoException ex){
         return ResponseEntity.status(404).body(ServletUtil.getJson("erro", ex.getMessage()));
     }
-
 }

@@ -20,7 +20,7 @@ public class GenericValidator implements ConstraintValidator<ValidarCampo, Objec
 
         return switch (tipo) {
             case BOOLEANO -> value instanceof Boolean;
-            case NUMERICO -> value instanceof Number;
+            case NUMERICO -> isNumerico(value.toString());
             case DATA -> isDate(value.toString());
             case DOUBLE -> isDouble(value.toString());
             case INTEIRO -> value instanceof Integer;
@@ -42,6 +42,10 @@ public class GenericValidator implements ConstraintValidator<ValidarCampo, Objec
             return false;
         }
         return true;
+    }
+
+    public boolean isNumerico(String str) {
+        return str != null && str.matches("\\d+");
     }
 
 }

@@ -1,6 +1,5 @@
 package br.com.taurustech.gestor.controller;
 
-import br.com.taurustech.gestor.model.Conta;
 import br.com.taurustech.gestor.model.dto.ContaDTO;
 import br.com.taurustech.gestor.service.ContaService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,7 @@ public class ContaController {
 
     @PostMapping
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
-    public ResponseEntity<Void> cadastrar (@RequestBody Conta contaDTO){
+    public ResponseEntity<Void> cadastrar (@RequestBody ContaDTO contaDTO){
         service.cadastrar(contaDTO);
         return ResponseEntity.status(201).build();
     }

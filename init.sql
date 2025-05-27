@@ -82,3 +82,29 @@ VALUES
 ('2026-01-01', 'Conta teste', 2000.00, null, 'é isso', null, 1, 1, 1, 'f3a6df49-8b26-4890-9b56-2ddc94e8f1f1');
 ('3025-01-05', 'Segunda conta teste', 3000.00, null, 'testando', null, 2,2,2, 'f3a6df49-8b26-4890-9b56-2ddc94e8f1f1');
 ('3025-01-05', 'Terceira conta teste', 3000.00, null, 'testando3', null, 3,2,5, 'e9b1f85d-4a58-4c2e-bb8b-3a41f8a9d1c7');
+
+CREATE TABLE IF NOT EXISTS funcao (
+    id SERIAL PRIMARY KEY,
+    descricao VARCHAR(100) NOT NULL
+);
+
+INSERT INTO funcao (descricao) VALUES
+('ANALISTA'),
+('DESENVOLVEDOR'),
+('COORDENADOR'),
+('ESTAGIARIO'),
+('DIRETOR');
+
+CREATE TABLE IF NOT EXISTS funcionario (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    funcao_id INTEGER,
+    cpf VARCHAR(14) NOT NULL,
+    telefone VARCHAR(14) NOT NULL,
+    salario  DOUBLE PRECISION NOT NULL,
+    ativo BOOLEAN NOT NULL,
+    FOREIGN KEY (funcao_id) REFERENCES "funcao" (id)
+
+);
+INSERT INTO funcionario (nome, funcao_id, cpf, telefone, salario, ativo) VALUES
+('Ana Maria Braga', 2, '100.100.100-18', '558191000-1000', 2000.00, true)
