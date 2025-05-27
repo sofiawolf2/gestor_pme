@@ -117,7 +117,14 @@ public class ContaService {
     public ResponseEntity<byte[]> imprimirImagemConta(String id) {
        return imagemService.imprimirPNG(buscarById(id).getImagem());
     }
+    public void deletarImagemById(String id) {
+        var conta = buscarValidando(id);
+        imagemService.deletarImagemMemoria(conta.getImagem());
+        conta.setImagem(null);
+        contaRepository.save(conta);
+    }
 
     public void deletarTodosMenos (List<Integer> lista) {contaRepository.deleteAllExcept(lista);}
+
 
 }

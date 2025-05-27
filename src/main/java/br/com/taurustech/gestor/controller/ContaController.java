@@ -40,6 +40,13 @@ public class ContaController {
         return service.imprimirImagemConta(id);
     }
 
+    @DeleteMapping("/{id}/png")
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    public ResponseEntity <Void> deleteImagemContaById(@PathVariable String id){
+        service.deletarImagemById(id);
+        return ResponseEntity.status(200).build();
+    }
+
     @DeleteMapping("/{id}")
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     public ResponseEntity <Void> deleteContaById(@PathVariable String id){
