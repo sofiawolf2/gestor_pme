@@ -14,6 +14,7 @@ import org.springframework.test.context.TestConstructor;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.sql.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -67,9 +68,9 @@ class ContaTests extends BaseAPITest{
 
     private ContaDTO gerarContaBasicaComDescricao (String descricao){
         var dto = new ContaDTO();
-        dto.setVencimento("2026-01-01");
+        dto.setVencimento(Date.valueOf("2026-01-01"));
         dto.setDescricao(descricao);
-        dto.setValor("100.00");
+        dto.setValor(Double.valueOf("100.00"));
         dto.setStatus("aberta");
         dto.setOrigem("fornecedor");
         dto.setCategoria("despesa fixa");
