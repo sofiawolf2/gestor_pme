@@ -1,8 +1,6 @@
 package br.com.taurustech.gestor.model.dto;
 
 import br.com.taurustech.gestor.model.Funcionario;
-import br.com.taurustech.gestor.model.TipoValidacao;
-import br.com.taurustech.gestor.validator.ValidarCampo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.modelmapper.ModelMapper;

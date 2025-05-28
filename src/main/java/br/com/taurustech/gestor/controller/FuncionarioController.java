@@ -33,4 +33,18 @@ public class FuncionarioController {
     public ResponseEntity <FuncionarioDTO> getContaById(@PathVariable String id){
         return ResponseEntity.ok(service.buscarById(id));
     }
+
+    @DeleteMapping("/{id}")
+    @Secured({"ROLE_ADMIN"})
+    public ResponseEntity <Void> deleteFuncinarioById(@PathVariable String id){
+        service.deletarById(id);
+        return ResponseEntity.status(200).build();
+    }
+
+    @PatchMapping("/{id}")
+    @Secured({"ROLE_ADMIN"})
+    public ResponseEntity<Void> atualizarId(@RequestBody FuncionarioDTO dto, @PathVariable String id){
+        service.atualizarPatch(dto,id);
+        return ResponseEntity.noContent().build();
+    }
 }

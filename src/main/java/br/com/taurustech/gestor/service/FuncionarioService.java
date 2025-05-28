@@ -50,4 +50,21 @@ public class FuncionarioService {
         var funcionario = buscarValidando(id);
         return FuncionarioDTO.createOutput(funcionario);
     }
+
+    public void deletarById(String id) {
+        funcionarioRepository.delete(buscarValidando(id));
+    }
+
+    public void atualizarPatch(FuncionarioDTO dto, String id) {
+        var funcAntes = buscarValidando(id);
+        var funcGerado = gerarEntidade(dto);
+
+        if(dto.getNome()!=null) funcAntes.setNome(funcGerado.getNome());
+        if(dto.getTelefone()!=null) funcAntes.setTelefone(funcGerado.getTelefone());
+        if(dto.getFuncao()!=null) funcAntes.setFuncao(funcGerado.getFuncao());
+        if(dto.getAtivo()!=null) funcAntes.setAtivo(funcGerado.getAtivo());
+        if(dto.getSalario()!=null) funcAntes.setSalario(funcGerado.getSalario());
+
+        funcionarioRepository.save(funcAntes);
+    }
 }

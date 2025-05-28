@@ -10,7 +10,7 @@ import lombok.Data;
 @Entity @Data
 public class Funcionario {
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Integer id;
 
         @NotBlank(message = "campo obrigatório")
@@ -22,7 +22,7 @@ public class Funcionario {
         private Funcao funcao;
 
         @NotBlank(message = "campo obrigatório")
-        @ValidarCampo(tipo = TipoValidacao.CPF, message = "campo deve ter de 11 a 14 caracteres e conter apenas números")
+        @ValidarCampo(tipo = TipoValidacao.CPF, message = "campo deve seguir o padrão XXX.XXX.XXX-XX preenchendo xX com numeros")
         private String cpf;
 
         @NotBlank(message = "campo obrigatório")
