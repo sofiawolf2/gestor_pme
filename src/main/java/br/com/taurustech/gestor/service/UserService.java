@@ -27,7 +27,7 @@ public class UserService {
     private final UserValidator validator;
     private final RoleService roleService;
 
-    String erroNotFound = "Usuário não encontrado";
+    String erroNotFound = "usuário não encontrado";
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     private User pesquisarValidando(String id){

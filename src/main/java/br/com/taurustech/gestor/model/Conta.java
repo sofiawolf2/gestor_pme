@@ -25,7 +25,6 @@ public class Conta {
     private String descricao;
 
     @NotNull(message = "campo obrigatório")
-    @ValidarCampo(tipo = TipoValidacao.DOUBLE, message = "campo deve ser um número decimal")
     private Double valor;
 
     @Column(name = "data_pagamento")

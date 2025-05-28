@@ -30,7 +30,7 @@ public class ContaService {
     private final ImagemService imagemService;
 
 
-    String erroNotFound = "Conta não encontrada";
+    String erroNotFound = "conta não encontrada";
 
     private Conta buscarValidando (String id){
         return contaRepository.findById(isInteger(id, "id")).orElseThrow(() -> new ObjetoNaoEncontradoException(erroNotFound));

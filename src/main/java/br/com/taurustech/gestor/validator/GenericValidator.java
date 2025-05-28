@@ -19,21 +19,13 @@ public class GenericValidator implements ConstraintValidator<ValidarCampo, Objec
         if (value == null) return true;// nao valida a onrigatoriedade
 
         return switch (tipo) {
-            case BOOLEANO -> value instanceof Boolean;
             case NUMERICO -> isNumerico(value.toString());
             case DATA -> isDate(value.toString());
-            case DOUBLE -> isDouble(value.toString());
             case INTEIRO -> value instanceof Integer;
+            case CPF -> isCPF(value.toString());
+            case TELEFONE -> isTelefone(value.toString());
 
         };
-    }
-    private boolean isDouble(String valor) {
-        try {
-            Double.parseDouble(valor);
-        } catch (NumberFormatException e) {
-            return false;
-        }
-        return true;
     }
     private boolean isDate(String valor) {
         try {
@@ -44,8 +36,18 @@ public class GenericValidator implements ConstraintValidator<ValidarCampo, Objec
         return true;
     }
 
-    public boolean isNumerico(String str) {
+    private boolean isNumerico(String str) {
         return str != null && str.matches("\\d+");
     }
+
+    private boolean isCPF(String cpf){
+        return (isNumerico(cpf) && cpf.length()==11);
+    }
+
+    private boolean isTelefone (String string){
+        return  (isNumerico(string) && string.length()>=12 && string.length()<=14);
+    }
+
+
 
 }
