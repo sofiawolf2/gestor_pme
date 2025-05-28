@@ -1,6 +1,8 @@
 package br.com.taurustech.gestor.model.dto;
 
 import br.com.taurustech.gestor.model.Funcionario;
+import br.com.taurustech.gestor.model.TipoValidacao;
+import br.com.taurustech.gestor.validator.ValidarCampo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
@@ -15,7 +17,7 @@ public class FuncionarioDTO {
     private Double salario;
     private Boolean ativo;
 
-    public FuncionarioDTO createOutput(Funcionario funcionario){
+    public static FuncionarioDTO createOutput(Funcionario funcionario){
         ModelMapper modelMapper = new ModelMapper();
         var dto = modelMapper.map(funcionario, FuncionarioDTO.class);
         dto.setFuncao(funcionario.getFuncao().getDescricao());
