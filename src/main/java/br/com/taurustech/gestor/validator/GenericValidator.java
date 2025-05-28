@@ -41,7 +41,7 @@ public class GenericValidator implements ConstraintValidator<ValidarCampo, Objec
     }
 
     private boolean isCPF(String cpf){
-        return (isNumerico(cpf) && cpf.length()==11);
+        return cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}");
     }
 
     private boolean isTelefone (String string){
