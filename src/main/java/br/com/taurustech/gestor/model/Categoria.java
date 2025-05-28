@@ -9,7 +9,7 @@ import lombok.Data;
 @Entity @Data
 public class Categoria {
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Integer id;
         private String descricao;
 
