@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -20,7 +21,7 @@ public class Conta {
     @ValidarCampo(tipo = TipoValidacao.DATA, message = "campo deve ser uma Data seguindo o formato AAAA-MM-DD")
     private LocalDate vencimento;
 
-    @Column(length = 100)
+    @Size(max = 100, message = "campo fora do tamanho padrão")
     @NotBlank(message = "campo obrigatório")
     private String descricao;
 
