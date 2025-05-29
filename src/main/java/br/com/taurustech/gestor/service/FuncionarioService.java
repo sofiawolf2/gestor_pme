@@ -6,6 +6,7 @@ import br.com.taurustech.gestor.model.Funcionario;
 import br.com.taurustech.gestor.model.dto.FuncionarioDTO;
 import br.com.taurustech.gestor.repository.FuncaoRepository;
 import br.com.taurustech.gestor.repository.FuncionarioRepository;
+import br.com.taurustech.gestor.validator.FuncionarioValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -19,6 +20,7 @@ import static br.com.taurustech.gestor.validator.ValidatorUtil.isInteger;
 public class FuncionarioService {
     private final FuncionarioRepository funcionarioRepository;
     private final FuncaoRepository funcaoRepository;
+    private final FuncionarioValidator validator;
     String erroNotFound = "funcionário não encontrado";
 
     private Funcionario gerarEntidade(FuncionarioDTO dto){
@@ -33,7 +35,9 @@ public class FuncionarioService {
     }
 
     public void cadastrar(FuncionarioDTO funcionario) {
-        funcionarioRepository.save(gerarEntidade(funcionario));
+        var func = gerarEntidade(funcionario);
+        validator.validarNovoF(func);
+        funcionarioRepository.save(func);
     }
 
     public List<FuncionarioDTO> listarFuncionarios(String funcao) {
@@ -66,5 +70,9 @@ public class FuncionarioService {
         if(dto.getSalario()!=null) funcAntes.setSalario(funcGerado.getSalario());
 
         funcionarioRepository.save(funcAntes);
+    }
+
+    public void deletarTodosMenos(List<Integer> integers) {
+        funcionarioRepository.deleteAllExcept(integers);
     }
 }
