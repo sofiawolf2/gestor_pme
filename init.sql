@@ -107,5 +107,30 @@ CREATE TABLE IF NOT EXISTS funcionario (
 
 );
 INSERT INTO funcionario (nome, funcao_id, cpf, telefone, salario, ativo) VALUES
-('Ana Maria Braga', 2, '100.100.100-18', '5581910001000', 2000.00, true)
-('Carlos Richard', 1, '100.100.100-19', '5581910001030', 2000.00, true)
+('Ana Maria Braga', 2, '100.100.100-18', '5581910001000', 2000.00, true),
+('Carlos Richard', 1, '100.100.100-19', '5581910001030', 2000.00, true);
+
+CREATE TABLE IF NOT EXISTS tipo_pix (
+    id SERIAL PRIMARY KEY,
+    descricao VARCHAR(100) NOT NULL
+);
+
+INSERT INTO tipo_pix (descricao) VALUES
+('TRANSFERÊNCIA'),
+('COBRANÇA'),
+('SAQUE'),
+('TROCO'),
+('PARCELADO'),
+('GARANTIDO'),
+('AUTOMÁTICO');
+
+CREATE TABLE IF NOT EXISTS pix (
+    id SERIAL PRIMARY KEY,
+    descricao VARCHAR (30) NOT NULL,
+    funcionario_id INTEGER,
+    tipo_pix_id INTEGER,
+    FOREIGN KEY (funcionario_id) REFERENCES "funcionario" (id),
+    FOREIGN KEY (tipo_pix_id) REFERENCES "tipo_pix" (id)
+);
+INSERT INTO pix (descricao, funcionario_id, tipo_pix_id) VALUES
+('PRIMEIRO pix', 1, 1);
