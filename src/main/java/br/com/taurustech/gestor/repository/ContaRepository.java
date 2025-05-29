@@ -14,4 +14,6 @@ public interface ContaRepository extends JpaRepository<Conta, Integer> {
     @Transactional
     @Query("DELETE FROM Conta u WHERE u.id NOT IN (:id)")
     void deleteAllExcept(@Param("id") List<Integer> id);
+
+    List<Conta> findByDescricao(String descricao);
 }

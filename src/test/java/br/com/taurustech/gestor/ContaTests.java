@@ -1,6 +1,5 @@
 package br.com.taurustech.gestor;
 
-import br.com.taurustech.gestor.model.Conta;
 import br.com.taurustech.gestor.model.dto.ContaDTO;
 import br.com.taurustech.gestor.repository.ContaRepository;
 import br.com.taurustech.gestor.service.ContaService;
@@ -79,15 +78,6 @@ class ContaTests extends BaseAPITest{
         return dto;
     }
 
-    private Conta buscarSalvaByDescricao (String descricao){
-        var todos = contaRepository.findAll();
-        assertFalse(todos.isEmpty());
-        for (Conta a : todos) {
-            if (a.getDescricao().equals(descricao)) return a;
-        }
-        return null;
-    }
-
     @Test
     void testeBuscar(){
         var retorno = getConta("1");
@@ -128,17 +118,16 @@ class ContaTests extends BaseAPITest{
     void testePostEDeleteConta()  {
         String descricao = "criando conta direto do teste";
         var input = gerarContaBasicaComDescricao(descricao);
-        assertNull(buscarSalvaByDescricao(descricao)); // conta não salva
+        assertTrue(contaRepository.findByDescricao(descricao).isEmpty()); // conta não salva
 
         postConta(input);
 
-        var contaSalva = buscarSalvaByDescricao(descricao);
+        var contaSalva = contaRepository.findByDescricao(descricao).getFirst();
         assertNotNull(contaSalva); // conta salva
 
         deleteConta(contaSalva.getId().toString()); // deletar conta por id
 
-        assertNull(buscarSalvaByDescricao(descricao)); // conta não existe mais
-
+        assertTrue(contaRepository.findByDescricao(descricao).isEmpty()); // conta não existe mais
     }
 
     @Test

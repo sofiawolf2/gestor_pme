@@ -125,7 +125,8 @@ class FuncionarioTests extends BaseAPITest{
         assertNotEquals(2900.92, salarioAntes);
         assertNotEquals("5581900000000", telefoneAntes);
 
-        var dto = gerarFuncionario(null, "5581900000000", null);
+        var dto = new FuncionarioDTO ();
+        dto.setTelefone("5581900000000");
         dto.setSalario(2900.92);
 
         pacthFuncionario(dto, "1");
