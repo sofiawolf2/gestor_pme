@@ -107,5 +107,5 @@ CREATE TABLE IF NOT EXISTS funcionario (
 
 );
 INSERT INTO funcionario (nome, funcao_id, cpf, telefone, salario, ativo) VALUES
-('Ana Maria Braga', 2, '100.100.100-18', '558191000-1000', 2000.00, true)
-('Carlos Richard', 1, '100.100.100-18', '558191000-1000', 2000.00, true)
+('Ana Maria Braga', 2, '100.100.100-18', '5581910001000', 2000.00, true)
+('Carlos Richard', 1, '100.100.100-19', '5581910001030', 2000.00, true)
