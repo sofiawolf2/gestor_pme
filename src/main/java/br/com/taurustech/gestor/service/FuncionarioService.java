@@ -6,7 +6,6 @@ import br.com.taurustech.gestor.model.Funcionario;
 import br.com.taurustech.gestor.model.dto.FuncionarioDTO;
 import br.com.taurustech.gestor.repository.FuncaoRepository;
 import br.com.taurustech.gestor.repository.FuncionarioRepository;
-import br.com.taurustech.gestor.validator.FuncionarioValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -14,14 +13,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static br.com.taurustech.gestor.validator.ObjectValidation.gerarErroValidation;
 import static br.com.taurustech.gestor.validator.ValidatorUtil.isInteger;
 
 @Service @RequiredArgsConstructor
 public class FuncionarioService {
     private final FuncionarioRepository funcionarioRepository;
     private final FuncaoRepository funcaoRepository;
-    private final FuncionarioValidator validator;
     String erroNotFound = "funcionário não encontrado";
+    String jaExiste = "ja existe! Esse campo deve ser único";
 
     private Funcionario gerarEntidade(FuncionarioDTO dto){
         Funcionario entidade;
@@ -34,9 +34,14 @@ public class FuncionarioService {
         return funcionarioRepository.findById(isInteger(id, "id")).orElseThrow(() -> new ObjetoNaoEncontradoException(erroNotFound));
     }
 
+    private void validarCpfTelefone(Funcionario func){
+        if (func.getCpf()!=null && funcionarioRepository.existsByCpf(func.getCpf())) gerarErroValidation("cpf", jaExiste);
+        if (func.getCpf()!=null && funcionarioRepository.existsByTelefone(func.getTelefone())) gerarErroValidation("telefone", jaExiste);
+    }
+
     public void cadastrar(FuncionarioDTO funcionario) {
         var func = gerarEntidade(funcionario);
-        validator.validarNovoF(func);
+        validarCpfTelefone(func);
         funcionarioRepository.save(func);
     }
 
@@ -62,6 +67,8 @@ public class FuncionarioService {
     public void atualizarPatch(FuncionarioDTO dto, String id) {
         var funcAntes = buscarValidando(id);
         var funcGerado = gerarEntidade(dto);
+
+        validarCpfTelefone(funcGerado);
 
         if(dto.getNome()!=null) funcAntes.setNome(funcGerado.getNome());
         if(dto.getTelefone()!=null) funcAntes.setTelefone(funcGerado.getTelefone());
