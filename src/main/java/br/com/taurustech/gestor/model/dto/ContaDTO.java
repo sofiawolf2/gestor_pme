@@ -5,16 +5,16 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ContaDTO {
 
     private Integer id;
-    private Date vencimento;
+    private LocalDate vencimento;
     private String descricao;
     private Double valor;
-    private Date dataPagamento;
+    private LocalDate dataPagamento;
     private String observacao;
     private String imagem;
     private String status;

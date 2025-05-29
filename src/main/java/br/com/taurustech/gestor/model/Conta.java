@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
 @Data
 @Entity
 public class Conta {
@@ -18,7 +18,7 @@ public class Conta {
     @Future(message = "campo deve ser uma data futura")
     @NotNull(message = "campo obrigatório")
     @ValidarCampo(tipo = TipoValidacao.DATA, message = "campo deve ser uma Data seguindo o formato AAAA-MM-DD")
-    private Date vencimento;
+    private LocalDate vencimento;
 
     @Column(length = 100)
     @NotBlank(message = "campo obrigatório")
@@ -29,7 +29,7 @@ public class Conta {
 
     @Column(name = "data_pagamento")
     @ValidarCampo(tipo = TipoValidacao.DATA, message = "campo deve ser uma Data seguindo o formato AAAA-MM-DD")
-    private Date dataPagamento;
+    private LocalDate dataPagamento;
 
     private String observacao;
     private String imagem;
