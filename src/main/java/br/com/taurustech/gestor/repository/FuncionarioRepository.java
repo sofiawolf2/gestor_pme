@@ -16,5 +16,6 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Intege
     void deleteAllExcept(@Param("id") List<Integer> id);
 
     boolean existsByCpf(String cpf);
+    Funcionario findByCpf(String cpf);
     boolean existsByTelefone(String telefone);
 }
