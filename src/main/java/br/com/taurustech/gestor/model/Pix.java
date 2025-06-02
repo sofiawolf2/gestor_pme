@@ -8,6 +8,7 @@ import lombok.Data;
 
 @Entity @Data @Table (name = "pix")
 public class Pix {
+
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Integer id;
@@ -15,15 +16,15 @@ public class Pix {
         @NotBlank(message = "campo obrigatório")
         private String descricao;
 
-        @ManyToOne @NotNull(message = "campo inválido")
+        @ManyToOne
         @JoinColumn (name = "funcionario_id")
         private Funcionario funcionario;
         @ManyToOne @NotNull(message = "campo inválido")
         @JoinColumn (name = "tipo_pix_id")
         private TipoPix tipoPix;
 
-        public Pix(String descricao) {
-                this.descricao = descricao;
+        public Pix(TipoPix tipoPix) {
+                this.tipoPix = tipoPix;
         }
 
         public Pix() {
