@@ -24,13 +24,13 @@ public class FuncionarioController {
 
     @GetMapping
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
-    public ResponseEntity<List<FuncionarioDTO>> listarContas(@RequestParam (required = false) String funcao){
+    public ResponseEntity<List<FuncionarioDTO>> listarFuncionarios(@RequestParam (required = false) String funcao){
         return ResponseEntity.ok(service.listarFuncionarios(funcao));
     }
 
     @GetMapping("/{id}")
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
-    public ResponseEntity <FuncionarioDTO> getContaById(@PathVariable String id){
+    public ResponseEntity <FuncionarioDTO> getFuncionarioById(@PathVariable String id){
         return ResponseEntity.ok(service.buscarById(id));
     }
 
