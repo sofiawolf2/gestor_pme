@@ -30,7 +30,7 @@ public class FuncionarioService {
         return entidade;
     }
 
-    private Funcionario buscarValidando (String id){
+    Funcionario buscarValidando(String id){
         return funcionarioRepository.findById(isInteger(id, "id")).orElseThrow(() -> new ObjetoNaoEncontradoException(erroNotFound));
     }
 
