@@ -32,4 +32,11 @@ public class DespesaFuncionario {
     @ManyToOne @NotNull(message = "campo inválido")
     @JoinColumn (name = "tipoDespesa_id")
     private TipoDespesa tipoDespesa;
+
+    public DespesaFuncionario(TipoDespesa tipoDespesa) {
+        this.tipoDespesa = tipoDespesa;
+    }
+
+    public DespesaFuncionario() {
+    }
 }
