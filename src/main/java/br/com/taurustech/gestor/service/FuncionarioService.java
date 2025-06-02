@@ -56,8 +56,7 @@ public class FuncionarioService {
     }
 
     public FuncionarioDTO buscarById(String id) {
-        var funcionario = buscarValidando(id);
-        return FuncionarioDTO.createOutput(funcionario);
+        return FuncionarioDTO.createOutput(buscarValidando(id));
     }
 
     public void deletarById(String id) {
@@ -77,9 +76,5 @@ public class FuncionarioService {
         if(dto.getSalario()!=null) funcAntes.setSalario(funcGerado.getSalario());
 
         funcionarioRepository.save(funcAntes);
-    }
-
-    public void deletarTodosMenos(List<Integer> integers) {
-        funcionarioRepository.deleteAllExcept(integers);
     }
 }
