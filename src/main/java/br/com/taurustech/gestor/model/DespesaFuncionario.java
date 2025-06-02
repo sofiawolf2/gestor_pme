@@ -8,7 +8,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 
-@Entity @Data @EntityListeners(AuditingEntityListener.class)
+@Entity @Data @Table (name = "despesa_funcionario")
+@EntityListeners(AuditingEntityListener.class)
 public class DespesaFuncionario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

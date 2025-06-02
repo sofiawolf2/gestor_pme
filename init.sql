@@ -146,3 +146,18 @@ INSERT INTO tipo_despesa (descricao) VALUES
 ('OPERACIONAL'),
 ('FINANCEIRA'),
 ('NAO RECORRENTE');
+
+CREATE TABLE IF NOT EXISTS despesa_funcionario (
+    id SERIAL PRIMARY KEY,
+    funcionario_id INTEGER NOT NULL,
+    dt_entrada DATE DEFAULT CURRENT_DATE,
+    valor DOUBLE PRECISION NOT NULL,
+    observcao TEXT,
+    tipo_despesa_id INTEGER NOT NULL,
+    FOREIGN KEY (funcionario_id) REFERENCES "funcionario" (id),
+    FOREIGN KEY (tipo_despesa_id) REFERENCES "tipo_despesa" (id)
+);
+
+INSERT INTO despesa_funcionario (funcionario_id, valor, tipo_despesa_id) VALUES
+(1,300.00,1),
+(1,400.00,3);
