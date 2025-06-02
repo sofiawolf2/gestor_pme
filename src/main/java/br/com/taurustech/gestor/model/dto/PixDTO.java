@@ -23,5 +23,18 @@ public class PixDTO {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(this, Pix.class);
     }
+
+    public PixDTO(String descricao, String funcionario, String tipoPix) {
+        this.descricao = descricao;
+        this.funcionario = funcionario;
+        this.tipoPix = tipoPix;
+    }
+
+    public PixDTO(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public PixDTO() {
+    }
 }
 
