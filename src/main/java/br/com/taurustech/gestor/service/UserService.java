@@ -50,6 +50,7 @@ public class UserService {
     }
 
     public UserDTO cadastro(UserDTO dto){
+        dto.setId(null);
         validator.validarNovoUser(dto);
         var user = dto.getUser(roleService);
         if (!dto.getSenha().isEmpty()&& dto.getSenha().length()>1) user.setSenha(encoder.encode(dto.getSenha()));

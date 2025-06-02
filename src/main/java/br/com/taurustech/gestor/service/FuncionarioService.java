@@ -40,6 +40,7 @@ public class FuncionarioService {
     }
 
     public void cadastrar(FuncionarioDTO funcionario) {
+        funcionario.setId( null);
         var func = gerarEntidade(funcionario);
         validarCpfTelefone(func);
         funcionarioRepository.save(func);
