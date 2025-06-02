@@ -2,7 +2,6 @@ package br.com.taurustech.gestor;
 
 import br.com.taurustech.gestor.model.dto.ContaDTO;
 import br.com.taurustech.gestor.repository.ContaRepository;
-import br.com.taurustech.gestor.service.ContaService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -23,18 +22,16 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class ContaTests extends BaseAPITest{
-    private final ContaService contaService;
     private final ContaRepository contaRepository;
     String imagem64Exemplo = "iVBORw0KGgoAAAANSUhEUgAAAAcAAAAGCAYAAAAPDoR2AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAvSURBVBhXYzQwMPjPgA6s8hkW+D9jYIJyUYCVqSHDyzMnGbDrhAKsOmGAXEkGBgCmsgjFVcuAawAAAABJRU5ErkJggg==";
 
-    ContaTests(ContaService contaService, ContaRepository contaRepository) {
-        this.contaService = contaService;
+    ContaTests( ContaRepository contaRepository) {
         this.contaRepository = contaRepository;
     }
 
     @AfterEach
     void apagarCriados(){
-        contaService.deletarTodosMenos(List.of(1,2,3));
+        contaRepository.deleteAllExcept(List.of(1,2,3));
     }
 
     ResponseEntity<ContaDTO> getConta(String id) { return get("/api/v1/contas/" + id, ContaDTO.class); }

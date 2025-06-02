@@ -2,7 +2,6 @@ package br.com.taurustech.gestor;
 
 import br.com.taurustech.gestor.model.dto.FuncionarioDTO;
 import br.com.taurustech.gestor.repository.FuncionarioRepository;
-import br.com.taurustech.gestor.service.FuncionarioService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -21,17 +20,15 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL) @RunWith(SpringRunner.class)
 class FuncionarioTests extends BaseAPITest{
-    private final FuncionarioService service;
     private final FuncionarioRepository repository;
 
-    public FuncionarioTests(FuncionarioService service, FuncionarioRepository repository) {
-        this.service = service;
+    public FuncionarioTests(FuncionarioRepository repository) {
         this.repository = repository;
     }
 
     @AfterEach
     void apagarCriados(){
-        service.deletarTodosMenos(List.of(1,2));
+        repository.deleteAllExcept(List.of(1,2));
     }
 
     ResponseEntity<FuncionarioDTO> getFuncionario(String id) { return get("/api/v1/funcionarios/" + id, FuncionarioDTO.class); }
