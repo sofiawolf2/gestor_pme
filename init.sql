@@ -133,4 +133,16 @@ CREATE TABLE IF NOT EXISTS pix (
     FOREIGN KEY (tipo_pix_id) REFERENCES "tipo_pix" (id)
 );
 INSERT INTO pix (descricao, funcionario_id, tipo_pix_id) VALUES
-('PRIMEIRO pix', 1, 1);
+('Primeiro pix para testes', 1, 1),
+('Segundo pix para testes', 2, 2);
+
+CREATE TABLE IF NOT EXISTS tipo_despesa (
+    id SERIAL PRIMARY KEY,
+    descricao VARCHAR(100) NOT NULL
+);
+INSERT INTO tipo_despesa (descricao) VALUES
+('FIXA'),
+('VARIAVEL'),
+('OPERACIONAL'),
+('FINANCEIRA'),
+('NAO RECORRENTE');
