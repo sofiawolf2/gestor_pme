@@ -14,4 +14,6 @@ public interface PixRepository extends JpaRepository<Pix, Integer> {
     @Transactional
     @Query("DELETE FROM Pix u WHERE u.id NOT IN (:id)")
     void deleteAllExcept(@Param("id") List<Integer> id);
+
+    Pix findByDescricaoIgnoreCase (String descricao);
 }
