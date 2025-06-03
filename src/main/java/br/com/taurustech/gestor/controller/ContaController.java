@@ -44,21 +44,21 @@ public class ContaController {
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     public ResponseEntity <Void> deleteImagemContaById(@PathVariable String id){
         service.deletarImagemById(id);
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(204).build();
     }
 
     @DeleteMapping("/{id}")
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     public ResponseEntity <Void> deleteContaById(@PathVariable String id){
         service.deleteById(id);
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(204).build();
     }
 
     @PatchMapping("/{id}")
     @Secured({"ROLE_ADMIN"})
     public ResponseEntity<Void> atualizarId(@RequestBody ContaDTO conta, @PathVariable String id){
         service.atualizarPatch(conta,id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(204).build(); // no content
     }
 
 

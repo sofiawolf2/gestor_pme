@@ -38,13 +38,13 @@ public class FuncionarioController {
     @Secured({"ROLE_ADMIN"})
     public ResponseEntity <Void> deleteFuncinarioById(@PathVariable String id){
         service.deletarById(id);
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(204).build();
     }
 
     @PatchMapping("/{id}")
     @Secured({"ROLE_ADMIN"})
     public ResponseEntity<Void> atualizarId(@RequestBody FuncionarioDTO dto, @PathVariable String id){
         service.atualizarPatch(dto,id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(204).build();
     }
 }

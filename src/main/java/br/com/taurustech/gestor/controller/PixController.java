@@ -39,7 +39,7 @@ public class PixController {
     @Secured({"ROLE_ADMIN"})
     public ResponseEntity <Void> deletePixById(@PathVariable String id){
         service.deletarById(id);
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(204).build();
     }
 
 
@@ -47,7 +47,7 @@ public class PixController {
     @Secured({"ROLE_ADMIN"})
     public ResponseEntity<Void> atualizarId(@RequestBody Pix dto, @PathVariable String id){
         service.atualizarPatch(dto,id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(204).build();
     }
 
 }

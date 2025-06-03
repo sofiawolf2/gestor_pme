@@ -41,12 +41,12 @@ public class UserController {
     @Secured({"ROLE_ADMIN"})
     public ResponseEntity<Void> atualizarId(@RequestBody UserDTO user, @PathVariable String id){
         service.atualizarPatch(user,id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(204).build();
     }
     @DeleteMapping("/{id}")
     @Secured({"ROLE_ADMIN"})
     public ResponseEntity<Void> deletariD(@PathVariable String id){
         service.deletarStringId(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(204).build();
     }
 }
