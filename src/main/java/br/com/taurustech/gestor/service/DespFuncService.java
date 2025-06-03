@@ -25,7 +25,7 @@ public class DespFuncService {
     private DespesaFuncionario gerarEntidade(DespFuncDTO dto){
         DespesaFuncionario entidade;
         entidade = dto.gerarPixSemEntidades();
-        entidade.setFuncionario(funcionarioService.buscarValidando(dto.getFuncionario()));
+        entidade.setFuncionario(funcionarioService.buscarValidando(dto.getFuncionario(), true));
         entidade.setTipoDespesa(tipoDespesaRepository.findByDescricaoIgnoreCase(dto.getTipoDespesa()));
         return entidade;
     }
@@ -50,5 +50,19 @@ public class DespFuncService {
 
     public DespFuncDTO buscarById(String id) {
         return DespFuncDTO.createOutput(buscarValidando(id));
+    }
+
+    public void deletarById(String id) {
+        repository.deleteById(buscarValidando(id).getId());
+    }
+
+    public void atualizarPatch(DespFuncDTO dto, String id) {
+        var dFAntes = buscarValidando(id);
+        var dFGerado = gerarEntidade(dto);
+        if (dto.getObservacao()!=null) dFAntes.setObservacao(dFGerado.getObservacao());
+        if (dto.getTipoDespesa()!=null) dFAntes.setTipoDespesa(dFGerado.getTipoDespesa());
+        if (dto.getValor()!=null) dFAntes.setValor(dFGerado.getValor());
+        if (dto.getFuncionario()!=null) dFAntes.setFuncionario(dFGerado.getFuncionario());
+        repository.save(dFAntes);
     }
 }

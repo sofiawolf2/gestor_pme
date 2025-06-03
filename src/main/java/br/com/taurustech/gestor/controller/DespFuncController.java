@@ -19,7 +19,7 @@ public class DespFuncController {
     @Secured({ "ROLE_ADMIN"})
     public ResponseEntity<Void> cadastrar (@RequestBody DespFuncDTO dto){
         service.cadastrar(dto);
-        return ResponseEntity.status(201).build();
+        return ResponseEntity.status(201).build(); // created
     }
 
     @GetMapping
@@ -32,5 +32,20 @@ public class DespFuncController {
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     public ResponseEntity <DespFuncDTO> getDFById(@PathVariable String id){
         return ResponseEntity.ok(service.buscarById(id));
+    }
+
+    @DeleteMapping("/{id}")
+    @Secured({"ROLE_ADMIN"})
+    public ResponseEntity <Void> deleteDFById(@PathVariable String id){
+        service.deletarById(id);
+        return ResponseEntity.status(204).build();
+    }
+
+
+    @PatchMapping("/{id}")
+    @Secured({"ROLE_ADMIN"})
+    public ResponseEntity<Void> atualizarId(@RequestBody DespFuncDTO dto, @PathVariable String id){
+        service.atualizarPatch(dto,id);
+        return ResponseEntity.status(204).build(); // no content
     }
 }

@@ -3,13 +3,14 @@ package br.com.taurustech.gestor.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 
 @Entity @Data @Table (name = "despesa_funcionario")
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners(AuditingEntityListener.class) @RequiredArgsConstructor
 public class DespesaFuncionario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +38,4 @@ public class DespesaFuncionario {
         this.tipoDespesa = tipoDespesa;
     }
 
-    public DespesaFuncionario() {
-    }
 }
