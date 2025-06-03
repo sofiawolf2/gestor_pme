@@ -202,5 +202,5 @@ CREATE TABLE IF NOT EXISTS agencia (
 );
 
 INSERT INTO agencia (nome,conta,banco_id,funcionario_id,tipo_conta_id) VALUES
-('teste', 'conta teste', 1, 1, 1),
-('segundo teste', 'conta teste', 2, 2, 2);
+('Primeiro teste', 'conta teste', 1, 1, 1),
+('Segundo teste', 'conta teste', 2, 2, 2);

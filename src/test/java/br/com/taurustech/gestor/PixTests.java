@@ -34,7 +34,7 @@ class PixTests extends BaseAPITest {
 
     ResponseEntity<PixDTO> getPix(String id) { return get(url + "/"  + id, PixDTO.class); }
 
-    void postPix(PixDTO dto) { post("/api/v1/pixs", dto, Void .class);}
+    void postPix(PixDTO dto) { post(url, dto, Void .class);}
 
     void pacthPix(PixDTO dto, String id) {patch(url + "/"  + id, dto, Void.class);}
 

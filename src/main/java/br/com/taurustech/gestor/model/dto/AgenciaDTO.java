@@ -26,6 +26,17 @@ public class AgenciaDTO {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(this, Agencia.class);
     }
+
+    public AgenciaDTO(String nome, String conta, String banco, String funcionario, String tipoConta) {
+        this.nome = nome;
+        this.conta = conta;
+        this.banco = banco;
+        this.funcionario = funcionario;
+        this.tipoConta = tipoConta;
+    }
+
+    public AgenciaDTO() {
+    }
 }
 
 

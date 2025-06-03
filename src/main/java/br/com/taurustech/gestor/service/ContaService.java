@@ -72,7 +72,7 @@ public class ContaService {
 
         var lista = contaRepository.findAll(contaExample);
         if (lista.isEmpty()) throw new ObjetoNaoEncontradoException(erroNotFound);
-        if (lista.size() == 1) return List.of(ContaDTO.createOutput(lista.get(0)));
+        if (lista.size() == 1) return List.of(ContaDTO.createOutput(lista.getFirst()));
         return lista.stream().map(ContaDTO::createOutput).toList();
     }
 
