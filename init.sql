@@ -173,3 +173,34 @@ INSERT INTO banco (descricao) VALUES
 ('Bradesco'),
 ('Santander'),
 ('Caixa Econômica');
+
+CREATE TABLE IF NOT EXISTS tipo_conta (
+    id SERIAL PRIMARY KEY,
+    descricao VARCHAR(30) NOT NULL
+);
+INSERT INTO tipo_conta (descricao) VALUES
+('CORRENTE'),
+('POUPANÇA'),
+('SALARIAL'),
+('EMPRESARIAL'),
+('CONJUNTA'),
+('DIGITAL'),
+('PRE PAGA'),
+('MEI');
+
+CREATE TABLE IF NOT EXISTS agencia (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(20) NOT NULL,
+    conta VARCHAR(20) NOT NULL,
+    banco_id INTEGER NOT NULL,
+    funcionario_id INTEGER NOT NULL,
+    tipo_conta_id INTEGER NOT NULL,
+    FOREIGN KEY (banco_id) REFERENCES "banco" (id),
+    FOREIGN KEY (funcionario_id) REFERENCES "funcionario" (id),
+    FOREIGN KEY (tipo_conta_id) REFERENCES "tipo_conta" (id)
+
+);
+
+INSERT INTO agencia (nome,conta,banco_id,funcionario_id,tipo_conta_id) VALUES
+('teste', 'conta teste', 1, 1, 1),
+('segundo teste', 'conta teste', 2, 2, 2);
