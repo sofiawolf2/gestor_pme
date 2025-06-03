@@ -25,7 +25,7 @@ public class PixService {
     private Pix gerarEntidade(PixDTO dto){
         Pix entidade;
         entidade = dto.gerarPixSemEntidades();
-        entidade.setFuncionario(funcionarioService.buscarValidando(dto.getFuncionario()));
+        entidade.setFuncionario(funcionarioService.buscarValidando(dto.getFuncionario(), true));
         entidade.setTipoPix(tipoPixRepository.findByDescricaoIgnoreCase(dto.getTipoPix()));
         return entidade;
     }
@@ -59,7 +59,6 @@ public class PixService {
 
     public void atualizarPatch(Pix dto, String id) {
         var pixAntes = buscarValidando(id);
-
         if (dto.getDescricao()!=null){
             pixAntes.setDescricao(dto.getDescricao());
             repository.save(pixAntes);

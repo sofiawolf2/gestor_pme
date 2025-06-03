@@ -30,8 +30,10 @@ public class FuncionarioService {
         return entidade;
     }
 
-    Funcionario buscarValidando(String id){
-        return funcionarioRepository.findById(isInteger(id, "id")).orElseThrow(() -> new ObjetoNaoEncontradoException(erroNotFound));
+    Funcionario buscarValidando(String id, boolean classeAtributo){
+        String atributo = "id";
+        if (classeAtributo) atributo = "funcionario";
+        return funcionarioRepository.findById(isInteger(id, atributo)).orElseThrow(() -> new ObjetoNaoEncontradoException(erroNotFound));
     }
 
     private void validarCpfTelefone(Funcionario func){
@@ -57,15 +59,15 @@ public class FuncionarioService {
     }
 
     public FuncionarioDTO buscarById(String id) {
-        return FuncionarioDTO.createOutput(buscarValidando(id));
+        return FuncionarioDTO.createOutput(buscarValidando(id, false));
     }
 
     public void deletarById(String id) {
-        funcionarioRepository.delete(buscarValidando(id));
+        funcionarioRepository.delete(buscarValidando(id, false));
     }
 
     public void atualizarPatch(FuncionarioDTO dto, String id) {
-        var funcAntes = buscarValidando(id);
+        var funcAntes = buscarValidando(id, false);
         var funcGerado = gerarEntidade(dto);
 
         validarCpfTelefone(funcGerado);
