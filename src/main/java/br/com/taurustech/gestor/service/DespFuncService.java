@@ -29,7 +29,7 @@ public class DespFuncService {
         entidade.setTipoDespesa(tipoDespesaRepository.findByDescricaoIgnoreCase(dto.getTipoDespesa()));
         return entidade;
     }
-    public DespesaFuncionario buscarValidando (String id){
+    private DespesaFuncionario buscarValidando (String id){
         return repository.findById(isInteger(id, "id")).orElseThrow(() -> new ObjetoNaoEncontradoException(erroNotFound));
     }
 

@@ -29,7 +29,7 @@ public class PixService {
         entidade.setTipoPix(tipoPixRepository.findByDescricaoIgnoreCase(dto.getTipoPix()));
         return entidade;
     }
-    public Pix buscarValidando (String id){
+    private Pix buscarValidando (String id){
         return repository.findById(isInteger(id, "id")).orElseThrow(() -> new ObjetoNaoEncontradoException(erroNotFound));
     }
 
@@ -57,7 +57,7 @@ public class PixService {
         repository.deleteById(buscarValidando(id).getId());
     }
 
-    public void atualizarPatch(Pix dto, String id) {
+    public void atualizarPatch(PixDTO dto, String id) {
         var pixAntes = buscarValidando(id);
         if (dto.getDescricao()!=null){
             pixAntes.setDescricao(dto.getDescricao());

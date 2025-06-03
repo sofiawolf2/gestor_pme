@@ -1,6 +1,5 @@
 package br.com.taurustech.gestor.controller;
 
-import br.com.taurustech.gestor.model.Pix;
 import br.com.taurustech.gestor.model.dto.PixDTO;
 import br.com.taurustech.gestor.service.PixService;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +44,7 @@ public class PixController {
 
     @PatchMapping("/{id}")
     @Secured({"ROLE_ADMIN"})
-    public ResponseEntity<Void> atualizarId(@RequestBody Pix dto, @PathVariable String id){
+    public ResponseEntity<Void> atualizarId(@RequestBody PixDTO dto, @PathVariable String id){
         service.atualizarPatch(dto,id);
         return ResponseEntity.status(204).build();
     }
