@@ -17,13 +17,13 @@ class RoleTests {
     private RoleRepository repository;
 
     @Test
-    void testeExistsBy(){
+    void testeFindBy(){
         Role role = new Role();
         role.setNome("TESTE_EXISTS");
         role = repository.save(role);
-        assertTrue(repository.existsByNome(role.getNome()));
+        assertNotNull(repository.findByNomeIgnoreCase(role.getNome()));
         repository.delete(role);
-        assertFalse(repository.existsByNome(role.getNome()));
+        assertNull(repository.findByNomeIgnoreCase(role.getNome()));
     }
 
     @Test
@@ -46,7 +46,7 @@ class RoleTests {
         assertNotEquals("TESTE_SALVAR", role.getNome());
 
         repository.delete(role);
-        assertFalse(repository.existsByNome( role.getNome()));
+        assertNull(repository.findByNomeIgnoreCase( role.getNome()));
     }
 
 }

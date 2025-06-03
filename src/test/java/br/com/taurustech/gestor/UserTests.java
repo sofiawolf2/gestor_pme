@@ -1,7 +1,7 @@
 package br.com.taurustech.gestor;
 
 import br.com.taurustech.gestor.model.dto.UserDTO;
-import br.com.taurustech.gestor.service.RoleService;
+import br.com.taurustech.gestor.repository.RoleRepository;
 import br.com.taurustech.gestor.service.UserService;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.AfterEach;
@@ -26,11 +26,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class UserTests extends BaseAPITest{
 
     private final UserService service;
-    private final RoleService roleService;
+    private final RoleRepository roleRepository;
 
-    public UserTests(UserService service, RoleService roleService) {
+    public UserTests(UserService service, RoleRepository roleRepository) {
         this.service = service;
-        this.roleService = roleService;
+        this.roleRepository = roleRepository;
     }
 
     private ResponseEntity<UserDTO> getUser(String id) {
@@ -64,13 +64,13 @@ class UserTests extends BaseAPITest{
 
     @Test
     void testeServiceRegistroDuplo(){
-        var uuid1 = service.getID(service.cadastro(gerarUser(null,"sofiaUser", roleService.buscarNome("ROLE_USER"))));
+        var uuid1 = service.getID(service.cadastro(gerarUser(null,"sofiaUser", roleRepository.findByNomeIgnoreCase("ROLE_USER"))));
         assertNotNull(service.buscarOutID(uuid1.toString()));
 
         var sofiaUser = service.buscarLogin("sofiaUser");
         assertEquals(uuid1,  sofiaUser.getId());
 
-        var amanda = gerarUser(null,"sofiaUser", roleService.buscarNome("ROLE_USER"));
+        var amanda = gerarUser(null,"sofiaUser", roleRepository.findByNomeIgnoreCase("ROLE_USER"));
 
         try {
             service.cadastro(amanda);
@@ -84,7 +84,7 @@ class UserTests extends BaseAPITest{
 
     @Test
     void testeEditarService(){
-        service.cadastro(gerarUser(null,"EditarTeste", roleService.buscarNome("ROLE_USER")));
+        service.cadastro(gerarUser(null,"EditarTeste", roleRepository.findByNomeIgnoreCase("ROLE_USER")));
         var user = service.buscarLogin("EditarTeste");
         user.setLogin("Editado");
         service.atualizarPatch(UserDTO.createInput(user), user.getId().toString());
@@ -100,7 +100,7 @@ class UserTests extends BaseAPITest{
     }
     @Test
     void testePost(){
-        var retorno = post("/api/v1/usuarios", gerarUser(null,"testePost", roleService.buscarNome("ROLE_USER")), UserDTO.class);
+        var retorno = post("/api/v1/usuarios", gerarUser(null,"testePost", roleRepository.findByNomeIgnoreCase("ROLE_USER")), UserDTO.class);
         assertEquals(HttpStatus.CREATED, retorno.getStatusCode());
         assertNotNull(service.buscarLogin("testePost"));
 
@@ -108,10 +108,10 @@ class UserTests extends BaseAPITest{
 
     @Test
     void pesquisaPorAtributo(){
-        service.cadastro(gerarUser("Ana", "anaBia",roleService.buscarNome("ROLE_USER")));
-        service.cadastro(gerarUser("Sofia", "sofiaw", roleService.buscarNome("ROLE_USER")));
-        service.cadastro(gerarUser("Carlos", "car", roleService.buscarNome("ROLE_USER")));
-        service.cadastro(gerarUser("Bia", "bb", roleService.buscarNome("ROLE_USER")));
+        service.cadastro(gerarUser("Ana", "anaBia",roleRepository.findByNomeIgnoreCase("ROLE_USER")));
+        service.cadastro(gerarUser("Sofia", "sofiaw", roleRepository.findByNomeIgnoreCase("ROLE_USER")));
+        service.cadastro(gerarUser("Carlos", "car", roleRepository.findByNomeIgnoreCase("ROLE_USER")));
+        service.cadastro(gerarUser("Bia", "bb", roleRepository.findByNomeIgnoreCase("ROLE_USER")));
 
         ResponseEntity<List<UserDTO>> lista = getListaUsers("los", null);
         assertNotNull(lista.getBody());
@@ -137,7 +137,7 @@ class UserTests extends BaseAPITest{
 
     @Test
     void testePut(){
-        var id = service.getID(service.cadastro(gerarUser("Sofia", "uau", roleService.buscarNome("ROLE_USER"))));
+        var id = service.getID(service.cadastro(gerarUser("Sofia", "uau", roleRepository.findByNomeIgnoreCase("ROLE_USER"))));
         var user = service.buscarLogin("uau");
         assertNotNull(user);
         assertEquals("Sofia", user.getNome());
@@ -150,7 +150,7 @@ class UserTests extends BaseAPITest{
 
     @Test
     void testeDelete(){
-        var teste = gerarUser("Teste", "deletar", roleService.buscarNome("ROLE_USER"));
+        var teste = gerarUser("Teste", "deletar", roleRepository.findByNomeIgnoreCase("ROLE_USER"));
         var id = service.getID(service.cadastro(teste));
         var user = service.buscarOutID(id.toString());
         assertNotNull(user);

@@ -1,14 +1,11 @@
 package br.com.taurustech.gestor.model.dto;
 
 import br.com.taurustech.gestor.model.User;
-import br.com.taurustech.gestor.service.RoleService;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
-
-import java.util.UUID;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -52,13 +49,9 @@ public class UserDTO {
 
     }
 
-    public User getUser(RoleService roleService){
+    public User gerarUserSemEntidades(){
         ModelMapper modelMapper = new ModelMapper();
-        User user = modelMapper.map(this, User.class);
-        user.setRole(roleService.buscarNome(this.role));
-        if (this.id != null) user.setId(UUID.fromString(id));
-
-        return user;
+        return modelMapper.map(this, User.class);
     }
 
     public String toJson() throws JsonProcessingException {

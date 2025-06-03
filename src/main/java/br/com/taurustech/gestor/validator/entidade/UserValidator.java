@@ -2,8 +2,8 @@ package br.com.taurustech.gestor.validator.entidade;
 
 import br.com.taurustech.gestor.model.User;
 import br.com.taurustech.gestor.model.dto.UserDTO;
+import br.com.taurustech.gestor.repository.RoleRepository;
 import br.com.taurustech.gestor.repository.UserRepository;
-import br.com.taurustech.gestor.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -16,19 +16,19 @@ import static br.com.taurustech.gestor.validator.ValidatorUtil.validarRole;
 @RequiredArgsConstructor
 public class UserValidator {
     private final UserRepository userRpository;
-    private final RoleService roleService;
+    private final RoleRepository roleRepository;
 
 
     public void validarNovoUser (UserDTO dto){
         validarLogin(dto.getLogin());
-        validarRole(dto.getRole(),roleService);
+        validarRole(dto.getRole(),roleRepository);
         validarAdmin(dto, null);
     }
 
     public void validarAtualizado (UserDTO dto, UUID id){
         if (naoPodeSalvarLogin(dto, id)) validarLogin(dto.getLogin());
         if (dto.getRole()!=null) {
-            validarRole(dto.getRole(),roleService);
+            validarRole(dto.getRole(),roleRepository);
             validarAdmin(dto,id);
         }
     }

@@ -1,7 +1,7 @@
 package br.com.taurustech.gestor.validator;
 
 
-import br.com.taurustech.gestor.service.RoleService;
+import br.com.taurustech.gestor.repository.RoleRepository;
 
 import java.util.UUID;
 
@@ -11,8 +11,8 @@ public class ValidatorUtil {
     private ValidatorUtil() {
     }
 
-    public static void validarRole(String nome, RoleService service) {
-        if (!service.existeByNome(nome)){
+    public static void validarRole(String nome, RoleRepository repository) {
+        if (repository.findByNomeIgnoreCase(nome)==null){
             gerarErroValidation("role", "campo inválido");
         }
     }

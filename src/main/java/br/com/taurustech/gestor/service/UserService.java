@@ -1,8 +1,10 @@
 package br.com.taurustech.gestor.service;
 
 import br.com.taurustech.gestor.exception.ObjetoNaoEncontradoException;
+import br.com.taurustech.gestor.model.Role;
 import br.com.taurustech.gestor.model.User;
 import br.com.taurustech.gestor.model.dto.UserDTO;
+import br.com.taurustech.gestor.repository.RoleRepository;
 import br.com.taurustech.gestor.repository.UserRepository;
 import br.com.taurustech.gestor.validator.entidade.UserValidator;
 import lombok.RequiredArgsConstructor;
@@ -25,13 +27,19 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserValidator validator;
-    private final RoleService roleService;
+    private final RoleRepository roleRepository;
 
     String erroNotFound = "usuário não encontrado";
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-    private User pesquisarValidando(String id){
+    private User buscarValidando(String id){
         return userRepository.findById(Objects.requireNonNull(validarUUID(id))).orElseThrow(() -> new ObjetoNaoEncontradoException(erroNotFound));
+    }
+
+    private User gerarEntidade(UserDTO dto){
+        var user = dto.gerarUserSemEntidades();
+        user.setRole(roleRepository.findByNomeIgnoreCase(dto.getRole()));
+        return user;
     }
     public User buscarUserAtual(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -39,9 +47,9 @@ public class UserService {
     }
 
     public User buscarUserID (String id){
-        return pesquisarValidando(id);
+        return buscarValidando(id);
     }
-    public UserDTO buscarOutID(String id){ return UserDTO.createOutput(pesquisarValidando(id));}
+    public UserDTO buscarOutID(String id){ return UserDTO.createOutput(buscarValidando(id));}
     public User buscarLogin( String login){
         return userRepository.findByLogin(login);
     }
@@ -52,7 +60,7 @@ public class UserService {
     public UserDTO cadastro(UserDTO dto){
         dto.setId(null);
         validator.validarNovoUser(dto);
-        var user = dto.getUser(roleService);
+        var user = gerarEntidade(dto);
         if (!dto.getSenha().isEmpty()&& dto.getSenha().length()>1) user.setSenha(encoder.encode(dto.getSenha()));
         return UserDTO.createOutput(userRepository.save(user));
     }
@@ -62,7 +70,7 @@ public class UserService {
         user.setNome(nome);
         user.setLogin(login);
         user.setEmail(email);
-        user.setRole(roleService.buscarNomeProx(role));
+        user.setRole(new Role(role));
         ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
         Example<User> userExample = Example.of(user,matcher);
         var lista = userRepository.findAll(userExample);
@@ -74,18 +82,18 @@ public class UserService {
     }
 
     public void deletarStringId(String id) {
-        var retorno = pesquisarValidando(id);
+        var retorno = buscarValidando(id);
         userRepository.delete(retorno);
     }
 
     public void atualizarPatch(UserDTO dto, String id){
-        var user = pesquisarValidando(id);
+        var user = buscarValidando(id);
         validator.validarAtualizado(dto, user.getId());
         if (dto.getNome()!=null) user.setNome(dto.getNome());
         if (dto.getLogin()!=null) user.setLogin(dto.getLogin());
         if (dto.getEmail()!=null) user.setEmail(dto.getEmail());
         if (dto.getSenha()!=null) user.setSenha(encoder.encode(dto.getSenha()));
-        if (dto.getRole()!=null) user.setRole(roleService.buscarNome(dto.getRole()));
+        if (dto.getRole()!=null) user.setRole(roleRepository.findByNomeIgnoreCase(dto.getRole()));
 
         userRepository.save(user);
     }
