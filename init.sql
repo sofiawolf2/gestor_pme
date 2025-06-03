@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS despesa_funcionario (
     funcionario_id INTEGER NOT NULL,
     dt_entrada DATE DEFAULT CURRENT_DATE,
     valor DOUBLE PRECISION NOT NULL,
-    observcao TEXT,
+    observacao TEXT,
     tipo_despesa_id INTEGER NOT NULL,
     FOREIGN KEY (funcionario_id) REFERENCES "funcionario" (id),
     FOREIGN KEY (tipo_despesa_id) REFERENCES "tipo_despesa" (id)
