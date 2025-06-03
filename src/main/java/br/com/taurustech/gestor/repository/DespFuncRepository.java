@@ -15,5 +15,5 @@ public interface DespFuncRepository extends JpaRepository<DespesaFuncionario, In
     @Query("DELETE FROM DespesaFuncionario u WHERE u.id NOT IN (:id)")
     void deleteAllExcept(@Param("id") List<Integer> id);
 
-    DespesaFuncionario findByDescricaoIgnoreCase (String descricao);
+    DespesaFuncionario findByObservacaoIgnoreCase (String observacao);
 }
