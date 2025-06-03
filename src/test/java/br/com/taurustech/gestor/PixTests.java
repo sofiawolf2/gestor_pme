@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL) @RunWith(SpringRunner.class)
 class PixTests extends BaseAPITest {
     private final PixRepository repository;
+    private final String url = "/api/v1/pixs";
 
     public PixTests(PixRepository repository) {
         this.repository = repository;
@@ -31,21 +32,21 @@ class PixTests extends BaseAPITest {
         repository.deleteAllExcept(List.of(1,2));
     }
 
-    ResponseEntity<PixDTO> getPix(String id) { return get("/api/v1/pixs/" + id, PixDTO.class); }
+    ResponseEntity<PixDTO> getPix(String id) { return get(url + "/"  + id, PixDTO.class); }
 
     void postPix(PixDTO dto) { post("/api/v1/pixs", dto, Void .class);}
 
-    void pacthPix(PixDTO dto, String id) {patch("/api/v1/pixs/" + id, dto, Void.class);}
+    void pacthPix(PixDTO dto, String id) {patch(url + "/"  + id, dto, Void.class);}
 
-    void deletePix(String id) { delete("/api/v1/pixs/" + id, Void.class); }
+    void deletePix(String id) { delete(url + "/"  + id, Void.class); }
 
     ResponseEntity <List<PixDTO>> getListaPix(String tipoPix) {
-        String url = "/api/v1/pixs";
-        if (tipoPix != null) url = url + "?tipoPix=" + tipoPix;
+        var newUrl = url;
+        if (tipoPix != null) newUrl = newUrl + "?tipoPix=" + tipoPix;
         HttpHeaders headers = getHeaders();
 
         return rest.exchange(
-                url,
+                newUrl,
                 HttpMethod.GET,
                 new HttpEntity<>(headers),
                 new ParameterizedTypeReference<>() {

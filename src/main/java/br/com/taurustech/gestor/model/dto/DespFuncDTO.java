@@ -26,4 +26,13 @@ public class DespFuncDTO {
         return modelMapper.map(this, DespesaFuncionario.class);
     }
 
+    public DespFuncDTO(String funcionario, Double valor, String observacao, String tipoDespesa) {
+        this.funcionario = funcionario;
+        this.valor = valor;
+        this.observacao = observacao;
+        this.tipoDespesa = tipoDespesa;
+    }
+
+    public DespFuncDTO() {
+    }
 }

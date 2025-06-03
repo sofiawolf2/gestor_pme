@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL) @RunWith(SpringRunner.class)
 class FuncionarioTests extends BaseAPITest{
     private final FuncionarioRepository repository;
+    private final String url = "/api/v1/funcionarios";
 
     public FuncionarioTests(FuncionarioRepository repository) {
         this.repository = repository;
@@ -31,13 +32,13 @@ class FuncionarioTests extends BaseAPITest{
         repository.deleteAllExcept(List.of(1,2));
     }
 
-    ResponseEntity<FuncionarioDTO> getFuncionario(String id) { return get("/api/v1/funcionarios/" + id, FuncionarioDTO.class); }
+    ResponseEntity<FuncionarioDTO> getFuncionario(String id) { return get(url + "/" + id, FuncionarioDTO.class); }
 
-    void postFuncionario(FuncionarioDTO dto) { post("/api/v1/funcionarios", dto, Void .class);}
+    void postFuncionario(FuncionarioDTO dto) { post(url, dto, Void .class);}
 
-    void pacthFuncionario(FuncionarioDTO dto, String id) {patch("/api/v1/funcionarios/" + id, dto, Void.class);}
+    void pacthFuncionario(FuncionarioDTO dto, String id) {patch(url + "/" + id, dto, Void.class);}
 
-    void deleteFuncionario(String id) { delete("/api/v1/funcionarios/" + id, Void.class); }
+    void deleteFuncionario(String id) { delete(url + "/" + id, Void.class); }
 
     FuncionarioDTO gerarFuncionario( String cpf, String telefone, String funcao){
         FuncionarioDTO dto = new FuncionarioDTO();
@@ -51,12 +52,12 @@ class FuncionarioTests extends BaseAPITest{
     }
 
     ResponseEntity <List<FuncionarioDTO>> getListaFuncionario(String funcao) {
-        String url = "/api/v1/funcionarios";
-        if (funcao != null) url = url + "?funcao=" + funcao;
+        var newUrl = url;
+        if (funcao != null) newUrl = newUrl + "?funcao=" + funcao;
         HttpHeaders headers = getHeaders();
 
         return rest.exchange(
-                url,
+                newUrl,
                 HttpMethod.GET,
                 new HttpEntity<>(headers),
                 new ParameterizedTypeReference<>() {

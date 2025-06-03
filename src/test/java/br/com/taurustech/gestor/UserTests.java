@@ -27,6 +27,7 @@ class UserTests extends BaseAPITest{
 
     private final UserService service;
     private final RoleRepository roleRepository;
+    private final String url = "/api/v1/usuarios";
 
     public UserTests(UserService service, RoleRepository roleRepository) {
         this.service = service;
@@ -34,22 +35,22 @@ class UserTests extends BaseAPITest{
     }
 
     private ResponseEntity<UserDTO> getUser(String id) {
-        return get("/api/v1/usuarios/" + id, UserDTO.class);
+        return get(url + "/" + id, UserDTO.class);
     }
 
-    private void pacthUser(UserDTO user, String id) { patch("/api/v1/usuarios/" + id, user, Void.class);}
+    private void pacthUser(UserDTO user, String id) { patch(url + "/" + id, user, Void.class);}
 
-    private void deleteUser(String id) { delete("/api/v1/usuarios/" + id, Void.class);}
+    private void deleteUser(String id) { delete(url + "/" + id, Void.class);}
 
     private ResponseEntity<List<UserDTO>> getListaUsers(String nome, String login) {
-        String url = "/api/v1/usuarios?";
-        if (nome != null) url = url + "nome=" + nome + "&";
-        if (login != null) url = url + "login=" + login;
-        if (url.endsWith("&") || url.endsWith("?")) url = url.substring(0, url.length() - 1);
+        var newUrl = url + "?";
+        if (nome != null) newUrl = newUrl + "nome=" + nome + "&";
+        if (login != null) newUrl = newUrl + "login=" + login;
+        if (newUrl.endsWith("&") || newUrl.endsWith("?")) newUrl = newUrl.substring(0, newUrl.length() - 1);
         HttpHeaders headers = getHeaders();
 
         return rest.exchange(
-                url,
+                newUrl,
                 HttpMethod.GET,
                 new HttpEntity<>(headers),
                 new ParameterizedTypeReference<>() {

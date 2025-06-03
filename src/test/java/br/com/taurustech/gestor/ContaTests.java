@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class ContaTests extends BaseAPITest{
     private final ContaRepository contaRepository;
+    private final String url = "/api/v1/contas";
     String imagem64Exemplo = "iVBORw0KGgoAAAANSUhEUgAAAAcAAAAGCAYAAAAPDoR2AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAvSURBVBhXYzQwMPjPgA6s8hkW+D9jYIJyUYCVqSHDyzMnGbDrhAKsOmGAXEkGBgCmsgjFVcuAawAAAABJRU5ErkJggg==";
 
     ContaTests( ContaRepository contaRepository) {
@@ -34,27 +35,27 @@ class ContaTests extends BaseAPITest{
         contaRepository.deleteAllExcept(List.of(1,2,3));
     }
 
-    ResponseEntity<ContaDTO> getConta(String id) { return get("/api/v1/contas/" + id, ContaDTO.class); }
+    ResponseEntity<ContaDTO> getConta(String id) { return get(url + "/" + id, ContaDTO.class); }
 
-    ResponseEntity<byte[]> getContaImagem(String id) { return get("/api/v1/contas/" + id + "/png", byte[].class); }
+    ResponseEntity<byte[]> getContaImagem(String id) { return get(url + "/" + id + "/png", byte[].class); }
 
-    void deleteContaImagem(String id) { delete("/api/v1/contas/" + id + "/png", Void.class); }
+    void deleteContaImagem(String id) { delete(url + "/" + id + "/png", Void.class); }
 
-    void postConta(ContaDTO conta) { post("/api/v1/contas", conta, Void .class);}
+    void postConta(ContaDTO conta) { post(url, conta, Void .class);}
 
-    void pacthConta(ContaDTO conta, String id) {patch("/api/v1/contas/" + id, conta, Void.class);}
+    void pacthConta(ContaDTO conta, String id) {patch(url + "/" + id, conta, Void.class);}
 
-    void deleteConta(String id) { delete("/api/v1/contas/" + id, Void.class); }
+    void deleteConta(String id) { delete(url + "/" + id, Void.class); }
 
     ResponseEntity<List<ContaDTO>> getListaContas(String status, String origem) {
-        String url = "/api/v1/contas?";
-        if (status != null) url = url + "status=" + status + "&";
-        if (origem != null) url = url + "origem=" + origem;
-        if (url.endsWith("&") || url.endsWith("?")) url = url.substring(0, url.length() - 1);
+        var newUrl = url + "?";
+        if (status != null) newUrl = newUrl + "status=" + status + "&";
+        if (origem != null) newUrl = newUrl + "origem=" + origem;
+        if (newUrl.endsWith("&") || newUrl.endsWith("?")) newUrl = newUrl.substring(0, newUrl.length() - 1);
         HttpHeaders headers = getHeaders();
 
         return rest.exchange(
-                url,
+                newUrl,
                 HttpMethod.GET,
                 new HttpEntity<>(headers),
                 new ParameterizedTypeReference<>() {
