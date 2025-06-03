@@ -158,6 +158,18 @@ CREATE TABLE IF NOT EXISTS despesa_funcionario (
     FOREIGN KEY (tipo_despesa_id) REFERENCES "tipo_despesa" (id)
 );
 
-INSERT INTO despesa_funcionario (funcionario_id, valor, tipo_despesa_id) VALUES
-(1,300.00,1),
+INSERT INTO despesa_funcionario (funcionario_id, valor,observacao, tipo_despesa_id) VALUES
+(1,300.00,"Primeira despesa de funcionário para testes",1),
 (1,400.00,3);
+
+CREATE TABLE IF NOT EXISTS banco (
+    id SERIAL PRIMARY KEY,
+    descricao VARCHAR(100) NOT NULL
+);
+
+INSERT INTO banco (descricao) VALUES
+('Itau'),
+('Banco do Brasil'),
+('Bradesco'),
+('Santander'),
+('Caixa Econômica');
