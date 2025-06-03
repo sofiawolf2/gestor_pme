@@ -25,7 +25,7 @@ public class DespFuncService {
     private DespesaFuncionario gerarEntidade(DespFuncDTO dto){
         DespesaFuncionario entidade;
         entidade = dto.gerarPixSemEntidades();
-        entidade.setFuncionario(funcionarioService.buscarValidando(dto.getFuncionario(), true));
+        if (dto.getFuncionario()!=null) entidade.setFuncionario(funcionarioService.buscarValidando(dto.getFuncionario(), true));
         entidade.setTipoDespesa(tipoDespesaRepository.findByDescricaoIgnoreCase(dto.getTipoDespesa()));
         return entidade;
     }
