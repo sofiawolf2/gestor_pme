@@ -2,6 +2,7 @@ package br.com.taurustech.gestor.service;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.logging.log4j.util.InternalException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +48,7 @@ public class ImagemService {
         try {
             ByteArrayInputStream bis = new ByteArrayInputStream(validarStringImagem64(imagemBase64));
             BufferedImage imagem = ImageIO.read(bis);
+            if (imagem==null)  throw new IOException();
             String nomeImagemFinal ;
             if (idNomeImagem==null ){
                 do{
@@ -54,7 +56,7 @@ public class ImagemService {
                     existeImagemMemoriaPorNome(nomeImagemFinal);
                 }while (existeImagemMemoriaPorNome(nomeImagemFinal));
             } else {
-                if (!deletarImagemMemoria(idNomeImagem)) gerarErroValidation("imagem", "não foi possivel atualizar");
+                deletarImagemMemoria(idNomeImagem);
                 nomeImagemFinal = idNomeImagem;
             }
 
@@ -74,18 +76,16 @@ public class ImagemService {
     public Path getCaminho (String nome){
         return Paths.get(pasta + nome).toAbsolutePath();
     }
-    public boolean deletarImagemMemoria (String nome){
+    public void deletarImagemMemoria (String nome){
 
         File imagem = new File(String.valueOf(getCaminho(nome)));
         if (imagem.exists()) {
             try {
                 Files.delete(imagem.toPath());
             } catch (IOException e) {
-                return false;
+                throw new InternalException("Não foi possivel atualizar ou apagar imagem");
             }
-            return true;
         }
-        return false;
     }
 
     public boolean existeImagemMemoriaPorNome (String nome) {

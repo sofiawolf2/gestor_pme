@@ -169,7 +169,6 @@ class ContaTests extends BaseAPITest{
         assertNotNull(imagemRetorno.getBody()); // veio uma imagem
         assertNotEquals(HttpStatus.NOT_FOUND, imagemRetorno.getStatusCode()); // imagem encontrada
         assertEquals(byte[].class, imagemRetorno.getBody().getClass()); // imagem do tipo byte[]
-
         deleteContaImagem("1"); //deleta imagem
 
         //imagem não existe mais
