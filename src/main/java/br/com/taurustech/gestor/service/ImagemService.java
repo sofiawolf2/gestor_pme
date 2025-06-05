@@ -68,7 +68,7 @@ public class ImagemService {
             ImageIO.write(imagem, "png", outputFile);
 
         } catch (IOException e) {
-            gerarErroValidation("imagem", "inválida");
+            gerarErroValidation("imagem", "campo inválido");
         }
         return retorno;
     }
