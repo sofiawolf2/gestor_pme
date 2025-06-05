@@ -25,19 +25,19 @@ public class StatusController {
 
     @GetMapping
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
-    public ResponseEntity<List<Status>> listarstatuss(){
+    public ResponseEntity<List<Status>> listarTodos(){
         return ResponseEntity.ok(service.listarTodos());
     }
 
     @GetMapping("/{id}")
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
-    public ResponseEntity <Status> getstatusById(@PathVariable String id){
+    public ResponseEntity <Status> getById(@PathVariable String id){
         return ResponseEntity.ok(service.buscarById(id));
     }
 
     @DeleteMapping("/{id}")
     @Secured({"ROLE_ADMIN"})
-    public ResponseEntity <Void> deletestatusById(@PathVariable String id){
+    public ResponseEntity <Void> deleteById(@PathVariable String id){
         service.deletarById(id);
         return ResponseEntity.status(204).build();
     }
