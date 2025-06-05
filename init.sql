@@ -159,8 +159,8 @@ CREATE TABLE IF NOT EXISTS despesa_funcionario (
 );
 
 INSERT INTO despesa_funcionario (funcionario_id, valor,observacao, tipo_despesa_id) VALUES
-(1,300.00,"Primeira despesa de funcionário para testes",1),
-(1,400.00,3);
+(1,300.00,'Primeira despesa de funcionário para testes',1),
+(1,400.00,'Segunda despesa de func',3);
 
 CREATE TABLE IF NOT EXISTS banco (
     id SERIAL PRIMARY KEY,
