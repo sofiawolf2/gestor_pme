@@ -16,7 +16,7 @@ import static br.com.taurustech.gestor.validator.ValidatorUtil.isInteger;
 @Service @RequiredArgsConstructor
 public class BancoService {
     private final BancoRepository repository;
-    String erroNotFound = "banco não encontrada";
+    String erroNotFound = "banco não encontrado";
     String existe = "ja existe! Esse campo deve ser único";
 
     private void jaExisteDescricao (String descricao, Integer id){

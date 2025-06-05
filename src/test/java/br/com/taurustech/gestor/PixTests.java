@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL) @RunWith(SpringRunner.class)
 class PixTests extends BaseAPITest {
     private final PixRepository repository;
-    private final String url = "/api/v1/pixs";
+    private final String url = "/api/v1/pix";
 
     public PixTests(PixRepository repository) {
         this.repository = repository;
